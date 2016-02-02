@@ -8,6 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+
     <link rel="icon" href="../../favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
@@ -15,7 +16,8 @@
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <!-- Javascript -->
 
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
@@ -88,10 +90,8 @@
                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
             </button>
                 <br>
-                <label for="inputdateofbirth">Date Of Birth:</label><br>
-                <select id="inputdateofbirth" class="col-sm-2">
-                    <option value="volvo">Select Date</option>
-                </select>
+                <label>Date Of Birth:</label><br>
+                <input type="text" class="col-sm-2" id="datepicker-13" placeholder="Select Date">
                 <button type="button" class="btn btn-default" aria-label="Left Align">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </button>&nbsp;<button type="button" class="btn btn-default" aria-label="Left Align Align">
@@ -134,7 +134,7 @@
 
                 <!--Checkbox for license agreement-->
                 <br>
-                <label for="inputlic">License Agreement:</label><br>
+                <label for="inputlic1">License Agreement:</label><br>
                 <input type="radio" id="inputlic1" value="Yes">&nbsp;Yes
                 <button type="button" class="btn btn-default" aria-label="Left Align">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -146,7 +146,19 @@
                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
             </button><br>
                 <input type="radio" id="inputlic2" value="No">&nbsp;No
-                <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
+                <hr style="width: 100%; color: black; height: 1px; background-color:black;"/><br>
+                <!-- field selection-->
+                <label for="inputaddnewfield">Add New Field:</label><br>
+                <select id="inputaddnewfield" class="col-sm-2">
+                    <option value="SingleLineText">Single Line Text Field</option>
+                    <option value="Datefield">Date Field</option>
+                    <option value="DropDownField">Drop Down Field</option>
+                    <option value="CheckboxesField">Checkboxes Field</option>
+                    <option value="RadioButtonsfield">Radio Buttons Field</option>
+                </select>
+                &nbsp;<button type="button" class="btn btn-default" aria-label="Left Align Align">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
 
             </div>
 
@@ -157,5 +169,12 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $( "#datepicker-13" ).datepicker();
+            });
+        </script>
 </body>
 </html>
