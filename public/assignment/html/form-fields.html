@@ -21,7 +21,7 @@
     <!-- Javascript -->
 
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+    <link href="../../css/dashboard.css" rel="stylesheet">
     <link href="signin.css" rel="stylesheet">
 </head>
 <body>
@@ -35,14 +35,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Form Maker</a>
+            <a class="navbar-brand" href="dashboard.html">Form Maker</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="register.html">Register</a></li>
                 <li><a href="login.html" class="Login">Login</a></li>
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="profile.html">Username</a></li>
+                <li><a href="login.html">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">
@@ -50,6 +50,9 @@
         </div>
     </div>
 </nav>
+
+
+
 
 <div class="container-fluid">
     <div class="row">
@@ -108,9 +111,80 @@
                     <option value="Male">Male</option>
                     <option value="Male">Female</option>
                 </select>
-                <button type="button" class="btn btn-default" aria-label="Left Align">
+                <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                </button>&nbsp;<button type="button" class="btn btn-default" aria-label="Left Align Align">
+                </button>&nbsp;
+                <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    Field Properties
+                                </h4>
+                            </div>
+
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputlabel">Label</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputlabel" placeholder="Label"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputplaceholder">Placeholder</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputplaceholder" placeholder="Label"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputtooltip">Tooltip</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputtooltip" placeholder="Tooltip"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputtype" >Type</label>
+                                        <div class="col-sm-10">
+                                            <select id="inputtype" class="form-control">
+                                                <option value="SingleLineText">Options</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputtooltip">Options</label>
+                                        <div class="col-sm-10">
+                                            <select id="leftValues" class="form-control" size="5" multiple>
+                                            <option>Option 1</option>
+                                            <option>Option 2</option>
+                                            <option>Option 3</option></select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">
+                                    Ok
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-default" aria-label="Left Align Align">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>&nbsp;<button type="button" class="btn btn-default" aria-label="Left Align">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
