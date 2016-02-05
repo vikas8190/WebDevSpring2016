@@ -1,3 +1,15 @@
+/*hide button border*/
+.btn-default.outline {
+    border: none;
+}
+.btn.outline {
+    background: none;
+}
+.align-button {
+    text-align: right;
+}
+
+/* for the home page changes*/
 .navigation{
     margin: 0px auto;
     font-family: "Trebuchet MS", sans-serif;
