@@ -9,6 +9,10 @@
     text-align: right;
 }
 
+.form-horizontal .control-label {
+    text-align: left;
+}
+
 /* for the home page changes*/
 .navigation{
     margin: 0px auto;
