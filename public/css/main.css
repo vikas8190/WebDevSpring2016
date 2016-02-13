@@ -5,6 +5,11 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+.custom-menu ul{
+    float:right;
+    list-style-type: none;
+}
+
 body, html {
 	background-color: #262B30;
     /*background-color: #3be6c4;*/
