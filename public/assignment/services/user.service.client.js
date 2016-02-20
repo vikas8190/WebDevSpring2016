@@ -19,9 +19,9 @@
                 "username":"ed",     "password":"ed",      "roles": ["student"]                }
         ];
         var service={
-            findUserByUsernameAndPassword : findUserByUsernameAndPassword
+            findUserByUsernameAndPassword : findUserByUsernameAndPassword,
             //findAllUsers : findAllUsers,
-            //createUser : createUser,
+            createUser : createUser
             //deleteUserById : deleteUserById,
             //updateUser : updateUser
         };
@@ -33,11 +33,17 @@
 
                 if(users[i].username==username && users[i].password==password )
                 {
-                    console.log("Yes"+users[i].username);
                     callback(users[i]);
                 }
             }
             return null;
+        }
+        function createUser(user,callback){
+            console.log("createuser");
+            user._id=(new Date).getTime();
+            user.roles="[student]";
+            users.push(user);
+            callback(user);
         }
     }
 })();
