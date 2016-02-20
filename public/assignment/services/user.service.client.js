@@ -20,10 +20,10 @@
         ];
         var service={
             findUserByUsernameAndPassword : findUserByUsernameAndPassword,
-            //findAllUsers : findAllUsers,
-            createUser : createUser
-            //deleteUserById : deleteUserById,
-            //updateUser : updateUser
+            findAllUsers : findAllUsers,
+            createUser : createUser,
+            deleteUserById : deleteUserById,
+            updateUser : updateUser
         };
 
         return service;
@@ -44,6 +44,29 @@
             user.roles="[student]";
             users.push(user);
             callback(user);
+        }
+        function findAllUsers(callback){
+            callback(users);
+        }
+        function deleteUserById(userId, callback){
+            for(var i=0;i<users.length;i++){
+                if(users[i]._id==userid){
+                    users.splice(i,1);
+                    break;
+                }
+            }
+            callback(users);
+        }
+        function updateUser(userId, user, callback){
+            for(var i=0;i<users.length;i++){
+                if(users[i]._id==userId){
+                    users[i].password=user.password;
+                    users[i].firstName=user.firstname;
+                    users[i].lastName=user.lastname;
+                    break;
+                }
+            }
+            callback(users[i]);
         }
     }
 })();
