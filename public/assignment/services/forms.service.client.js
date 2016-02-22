@@ -15,17 +15,17 @@
         var service={
             createFormForUser:createFormForUser,
             findAllFormsForUser:findAllFormsForUser,
-            deleteFormById:deleteFormById
-            //updateFormById:updateFormById
+            deleteFormById:deleteFormById,
+            updateFormById:updateFormById
         };
         return service;
         function createFormForUser(userId, form, callback){
-            var newform;
+            var newform={"_id": "0", "title": "default", "userId": 1};
             newform._id=(new Date).getTime();
             newform.userId=userId;
             newform.title=form.title;
             forms.push(newform);
-            callback(newform);
+            callback(forms);
         }
         function findAllFormsForUser(userId,callback){
             console.log("search for userid:");
@@ -41,6 +41,15 @@
             for(var i=0;i<forms.length;i++){
                 if(forms[i]._id==formId){
                     forms.splice(i,1);
+                    break;
+                }
+            }
+            callback(forms);
+        }
+        function updateFormById(formId, newForm, callback){
+            for(var i=0;i<forms.length;i++){
+                if(forms[i]._id==formId){
+                    forms[i].title=newForm.title;
                     break;
                 }
             }

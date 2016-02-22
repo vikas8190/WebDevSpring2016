@@ -8,19 +8,31 @@
     function FormController($scope,$rootScope,FormService){
         console.log($rootScope.user._id);
         findForms();
+        var selectedForm=null;
         $scope.renderform=renderform;
         $scope.deleteForm=deleteForm;
+        $scope.updateForm=updateForm;
+        $scope.addForm=addForm;
+        $scope.selectForm=selectForm;
+        $scope.selectedForm=selectedForm;
         function findForms(){
             FormService.findAllFormsForUser($rootScope.user._id,renderform);
         }
         function deleteForm(formid){
             FormService.deleteFormById(formid,findForms);
         }
-        function form_after_del(forms){
-            $scope.forms=forms;
+        function updateForm(form){
+            FormService.updateFormById($scope.selectedForm._id,form,findForms);
+        }
+        function addForm(form){
+            FormService.createFormForUser($rootScope.user._id,form,findForms);
+        }
+        function selectForm(form){
+            $scope.selectedForm=form;
+            $scope.inputform={
+                title:form.title};
         }
         function renderform(forms){
-            console.log(forms);
             $scope.forms=forms;
         }
     }
