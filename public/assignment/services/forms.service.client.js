@@ -47,6 +47,10 @@
             callback(forms);
         }
         function updateFormById(formId, newForm, callback){
+            console.log("cur forms for user:");
+            console.log(forms);
+            console.log("size:");
+            console.log(forms.length);
             for(var i=0;i<forms.length;i++){
                 if(forms[i]._id==formId){
                     forms[i].title=newForm.title;

@@ -9,12 +9,12 @@
             </button>
             <a class="navbar-brand" href="#/home">Form Maker</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div ng-controller="HeaderController" id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a ng-hide="user" href="#/register">Register</a></li>
                 <li><a ng-hide="user" href="#/login" class="Login">Login</a></li>
                 <li><a ng-show="user" href="#/profile">{{user.username}}</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="" ng-click="logout(user)">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">

@@ -6,6 +6,9 @@
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
     function ProfileController($scope,$rootScope,UserService){
+        if($scope.user==null){
+            $scope.$location.path("/home");
+        }
         //declare event handlers
         $scope.update=update;
         function update(user){
