@@ -4,9 +4,8 @@
 (function(){
     angular
         .module("FormBuilderApp")
-        .controller("MainController",MainController);
-    function MainController($scope,$location){
+        .controller("FieldController",FieldController);
+    function FieldController($scope,$location){
         $scope.$location=$location;
-        $scope.$location.path("/home");
     }
 })();

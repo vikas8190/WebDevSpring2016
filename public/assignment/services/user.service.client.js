@@ -19,7 +19,7 @@
                 "username":"ed",     "password":"ed",      "roles": ["student"]                }
         ];
         var service={
-            findUserByUsernameAndPassword : findUserByUsernameAndPassword,
+            findUserByCredentials : findUserByCredentials,
             findAllUsers : findAllUsers,
             createUser : createUser,
             deleteUserById : deleteUserById,
@@ -27,13 +27,14 @@
         };
 
         return service;
-        function findUserByUsernameAndPassword(username, password, callback) {
+        function findUserByCredentials(username, password, callback) {
             for(var i=0;i<users.length;i++)
             {
 
                 if(users[i].username==username && users[i].password==password )
                 {
                     callback(users[i]);
+                    break;
                 }
             }
             return null;
@@ -61,11 +62,12 @@
             for(var i=0;i<users.length;i++){
                 if(users[i]._id==userId){
                     users[i].password=user.password;
-                    users[i].firstName=user.firstname;
-                    users[i].lastName=user.lastname;
+                    users[i].firstName=user.firstName;
+                    users[i].lastName=user.lastName;
                     break;
                 }
             }
+            console.log(users);
             callback(users[i]);
         }
     }

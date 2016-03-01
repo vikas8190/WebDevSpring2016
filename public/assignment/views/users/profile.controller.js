@@ -9,6 +9,11 @@
         if($scope.user==null){
             $scope.$location.path("/home");
         }
+        else{
+            console.log($rootScope.user);
+            $scope.user.firstName=$rootScope.user.firstName;
+            $scope.user.lastName=$rootScope.user.lastName;
+        }
         //declare event handlers
         $scope.update=update;
         function update(user){

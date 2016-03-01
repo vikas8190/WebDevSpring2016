@@ -10,13 +10,14 @@
 
         //event handler implementations:
         function login(user) {
-            UserService.findUserByUsernameAndPassword(user.username,user.password,login_user);
+            if(user) {
+                UserService.findUserByCredentials(user.username, user.password, login_user);
+            }
             function login_user(user)
             {
                 $rootScope.user=user;
                 $scope.$location.path("/profile");
             }
-
         }
     }
 })();
