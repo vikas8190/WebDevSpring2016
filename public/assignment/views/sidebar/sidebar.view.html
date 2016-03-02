@@ -1,8 +1,8 @@
 <div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController as controller">
-    <ul class="nav nav-sidebar">
-        <li><a href="#/home">Home</a></li>
-        <li><a ng-show="user" href="#/profile">Profile</a></li>
-        <li><a ng-show="user && user.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
-        <li><a ng-show="user" href="#/forms">Forms</a></li>
+    <ul class="nav-sidemenu nav-sidebar">
+        <li><a ng-class="{'btn-primary':$location.path() == '/home'}" href="#/home">Home</a></li>
+        <li><a ng-class="{'btn-primary':$location.path() == '/profile'}" ng-show="user" href="#/profile">Profile</a></li>
+        <li><a ng-class="{'btn-primary':$location.path() == '/admin'}" ng-show="user && user.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
+        <li><a ng-class="{'btn-primary':$location.path() == '/forms'}" ng-show="user" href="#/forms">Forms</a></li>
     </ul>
 </div>

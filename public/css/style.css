@@ -128,3 +128,35 @@ a.icon{
     box-shadow:1px 1px 4px #666;
 }
 
+.nav-sidemenu {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.nav-sidemenu > li {
+    position: relative;
+    display: block;
+}
+.nav-sidemenu > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.nav-sidemenu > li > a:hover,
+.nav-sidemenu > li > a:focus {
+    text-decoration: none
+}
+.nav-sidemenu > li.disabled > a {
+    color: #777777;
+}
+.nav-sidemenu > li.disabled > a:hover,
+.nav-sidemenu > li.disabled > a:focus {
+    color: #777777;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: not-allowed;
+}
+@media (min-width: 768px){
+.sidbar {
+    display:none;
+}}

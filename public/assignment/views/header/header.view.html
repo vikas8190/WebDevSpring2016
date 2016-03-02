@@ -10,8 +10,26 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#sidbar" aria-expanded="false" aria-controls="sidbar" ng-init="sidCollapsed=true" ng-click="sidCollapsed=!sidCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#/home">Form Maker</a>
         </div>
+        <!--<div id="sidbar" collapse="sidCollapsed" class="sidbar navbar-collapse collapse navbar-responsive-collapse">-->
+        <div id="sidbar" collapse="sidCollapsed" class="sidbar hidden-sm">
+            <!--<ul class="nav navbar-nav navbar-left">-->
+            <ul class="nav navbar-nav">
+                <li><a ng-class="{'active':$location.path() == '/home'}" href="#/home">Home</a></li>
+                <li><a ng-class="{'active':$location.path() == '/profile'}" ng-show="user" href="#/profile">Profile</a></li>
+                <li><a ng-class="{'active':$location.path() == '/admin'}" ng-show="user && user.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
+                <li><a ng-class="{'active':$location.path() == '/forms'}" ng-show="user" href="#/forms">Forms</a></li>
+            </ul>
+        </div>
+        <!--<div id="navbar" collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">-->
         <div id="navbar" collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">
         <!--<div collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">-->
             <ul class="nav navbar-nav navbar-right">
