@@ -20,9 +20,9 @@
             <a class="navbar-brand" href="#/home">Form Maker</a>
         </div>
         <!--<div id="sidbar" collapse="sidCollapsed" class="sidbar navbar-collapse collapse navbar-responsive-collapse">-->
-        <div id="sidbar" collapse="sidCollapsed" class="sidbar hidden-sm">
+        <div id="sidbar" collapse="sidCollapsed" class="sidbar">
             <!--<ul class="nav navbar-nav navbar-left">-->
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav hidden-lg">
                 <li><a ng-class="{'active':$location.path() == '/home'}" href="#/home">Home</a></li>
                 <li><a ng-class="{'active':$location.path() == '/profile'}" ng-show="user" href="#/profile">Profile</a></li>
                 <li><a ng-class="{'active':$location.path() == '/admin'}" ng-show="user && user.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
