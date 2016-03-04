@@ -160,3 +160,9 @@ a.icon{
 .sidbar {
     display:none;
 }}
+
+.disabled {
+    color: white;
+    cursor: default;
+    pointer-events: none;
+}

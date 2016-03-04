@@ -20,21 +20,16 @@
         };
         return service;
         function createFormForUser(userId, form, callback){
-            var newform={"_id": "0", "title": "default", "userId": 1};
-            newform._id=(new Date).getTime();
-            newform.userId=userId;
-            newform.title=form.title;
+            var newform={"_id": (new Date).getTime(),
+                "title": form.title,
+                "userId": userId};
             forms.push(newform);
             callback(forms);
         }
         function findAllFormsForUser(userId,callback){
-            console.log("search for userid:");
-            console.log(userId);
             var cur_forms=forms.filter(function(f){
                 return (f.userId===userId);
             });
-            console.log("cur forms:")
-            console.log(cur_forms);
             callback(cur_forms);
         }
         function deleteFormById(formId,callback){
@@ -47,10 +42,6 @@
             callback(forms);
         }
         function updateFormById(formId, newForm, callback){
-            console.log("cur forms for user:");
-            console.log(forms);
-            console.log("size:");
-            console.log(forms.length);
             for(var i=0;i<forms.length;i++){
                 if(forms[i]._id==formId){
                     forms[i].title=newForm.title;

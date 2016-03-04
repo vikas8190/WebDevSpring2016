@@ -28,16 +28,23 @@
 
         return service;
         function findUserByCredentials(username, password, callback) {
+            var userindex=-1;
             for(var i=0;i<users.length;i++)
             {
-
                 if(users[i].username==username && users[i].password==password )
                 {
-                    callback(users[i]);
+                    userindex=i;
                     break;
                 }
             }
-            return null;
+            if(userindex!=-1)
+            {
+                callback(users[userindex]);
+            }
+            else
+            {
+               callback(null);
+            }
         }
         function createUser(user,callback){
             console.log("createuser");
@@ -67,7 +74,6 @@
                     break;
                 }
             }
-            console.log(users);
             callback(users[i]);
         }
     }
