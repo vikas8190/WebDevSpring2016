@@ -2,6 +2,7 @@
  * Created by vilas on 18-02-2016.
  */
 (function(){
+    "use strict";
     angular
         .module("FormBuilderApp")
         .factory("UserService",UserService);
@@ -47,7 +48,6 @@
             }
         }
         function createUser(user,callback){
-            console.log("createuser");
             user._id=(new Date).getTime();
             user.roles="[student]";
             users.push(user);

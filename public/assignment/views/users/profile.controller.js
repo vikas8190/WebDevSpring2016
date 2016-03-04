@@ -2,10 +2,11 @@
  * Created by vilas on 17-02-2016.
  */
 (function(){
+    "use strict";
     angular
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
-    function ProfileController($scope,$rootScope,UserService){
+    function ProfileController($scope,$rootScope,$timeout,UserService){
         if($scope.user==null){
             $scope.$location.path("/home");
         }
@@ -19,7 +20,13 @@
             UserService.updateUser($rootScope.user._id,user,update_user);
         }
         function update_user(user){
-            $rootScope.user=user;
+            if(user!=null) {
+                $rootScope.user = user;
+                $scope.SuccessAlert=true;
+                $timeout(function(){
+                    $scope.SuccessAlert=false;
+                },2000);
+            }
         }
     }
 })();

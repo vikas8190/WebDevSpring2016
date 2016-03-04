@@ -2,6 +2,7 @@
  * Created by vilas on 20-02-2016.
  */
 (function(){
+    "use strict";
     angular
         .module("FormBuilderApp")
         .factory("FormService",FormService);

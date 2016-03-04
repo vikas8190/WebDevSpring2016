@@ -2,6 +2,7 @@
  * Created by vilas on 22-02-2016.
  */
 (function(){
+    "use strict";
     angular
         .module("FormBuilderApp")
         .controller("HeaderController",HeaderController);
