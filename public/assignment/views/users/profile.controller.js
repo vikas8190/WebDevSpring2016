@@ -11,8 +11,10 @@
             $scope.$location.path("/home");
         }
         else{
-            $scope.user.firstName=$rootScope.user.firstName;
-            $scope.user.lastName=$rootScope.user.lastName;
+            $scope.puser={firstName:$rootScope.user.firstName,
+                lastName:$rootScope.user.lastName,
+                username:$rootScope.user.username,
+                email:$rootScope.user.email};
         }
         //declare event handlers
         $scope.update=update;
