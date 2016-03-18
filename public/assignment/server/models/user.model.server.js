@@ -2,55 +2,80 @@
  * Created by vilas on 17-03-2016.
  */
 module.exports=function(app){
-    console.log("in included module");
     var users=require('./user.mock.json');
-    app.get('/api/user',function(req,res) {
-            res.json(users);
-        });
-    app.get('/api/user/:id',function(req,res) {
-        var index=req.params.id;
-        res.json(users[index]);
-        });
-    app.delete('/api/user/:id',function(req,res) {
-            var index=req.params.id;
-            courses.splice(index,1);
-            res.json(users[index]);
-        });
-    app.post('/api/user',function(req,res) {
-            var newuser=req.body;
-            users.push(newuser);
-            res.json(users);
+
+    var api={
+        createUser:createUser,
+        findAllUsers:findAllUsers,
+        findUserByID:findUserByID,
+        updateUserByID:updateUserByID,
+        deleteUserByID:deleteUserByID,
+        findUserByCredentials:findUserByCredentials,
+        findUserByUsername:findUserByUsername
+    };
+    return api;
+
+
+    function findAllUsers() {
+            return users;
+    }
+
+    function findUserByID(userID) {
+        for(var user in users){
+            if(users[user]._id=userID){
+                return users[user];
+            }
         }
-    );
-    app.put('/api/user/:id',function(req,res) {
-            var index=req.params.id;
-            users[index]=req.body;
-            res.json(users);
-        });
-    app.get('/api/userbyname/:username',function(req,res) {
-        var uname=req.params.username;
-        var matchuser=null;
-        for(var i=0;i<users.length;i++)
-        {
-            if(users[i].username==uname)
-            {
-                matchuser=users[i];
+    }
+
+    function filterUsers(user,userID){
+        return user._id!=userID;
+    }
+
+    function deleteUserByID(userID) {
+        users=users.filter(filterUsers,userID);
+        return users;
+    }
+
+    function createUser(user) {
+        var last_userID=users[users.length-1]._id;
+        var newUser= {
+            _id: last_userID + 1,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            roles: user.roles
+        };
+        users.push(newUser);
+        return newUser;
+    }
+
+   function updateUserByID(userID,user) {
+       for (var i = 0; i < users.length; i++) {
+           if (users[i]._id == userID) {
+               users[i] = user;
+               return users[i];
+           }
+       }
+   }
+
+    function findUserByUsername(username) {
+        for(var user in users){
+            if(users[user].username=username){
+                return users[user];
+            }
+        }
+    }
+    function findUserByCredentials(credentials) {
+        var matchuser = null;
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].username == credentials.username && users[i].password == credentials.password) {
+                matchuser = users[i];
                 break;
             }
         }
-        res.json(matchuser);
-    });
-    app.get('/api/userbycred/:cred',function(req,res) {
-        var credentials=req.params.cred;
-        var matchuser=null;
-        for(var i=0;i<users.length;i++)
-        {
-            if(users[i].username==credentials.username && users[i].password==credentials.password)
-            {
-                matchuser=users[i];
-                break;
-            }
-        }
-        res.json(matchuser);
-    });
+        return matchuser;
+    }
 }
