@@ -10,10 +10,7 @@ module.exports=function(app,formModel){
     app.put('/api/assignment/form/:formID',updateFormByID);
 
     function getAllFormForUserID(req,res) {
-        console.log("request params:");
-        console.log(req.params);
         var userID=req.params.userID;
-        console.log("get all forms for user:");
         var forms=formModel.findAllFormForUser(userID);
         res.json(forms);
     }

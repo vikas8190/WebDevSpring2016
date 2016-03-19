@@ -51,7 +51,6 @@ module.exports=function(){
     function deleteFormByID(formID) {
         for(var i in forms){
             if(forms[i]._id==formID){
-                console.log("deleting by splicing");
                 forms.splice(i,1);
                 return forms;
             }
@@ -77,8 +76,6 @@ module.exports=function(){
     }
 
     function findAllFormFieldsForFormID(formID){
-        console.log("get all form fields for formID:");
-        console.log(formID);
         for(var form in forms){
             if(forms[form]._id==formID){
                 return forms[form].fields;

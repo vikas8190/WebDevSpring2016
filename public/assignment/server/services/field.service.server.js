@@ -9,11 +9,8 @@ module.exports=function(app,formModel){
     app.put('/api/assignment/form/:formID/field/:fieldID',updateFormFieldByID);
 
     function getAllFieldsForFormID(req,res) {
-        console.log("get all fields for formid:");
         var formID=req.params.formID;
         var fieldList=formModel.findAllFormFieldsForFormID(formID);
-        console.log("found fields");
-        console.log(fieldList);
         res.json(fieldList);
     }
 
@@ -27,9 +24,6 @@ module.exports=function(app,formModel){
     function deleteFormFieldByID(req,res) {
         var formID=req.params.formID;
         var fieldID=req.params.fieldID;
-        console.log("deleting formid fieldid");
-        console.log(formID);
-        console.log(fieldID);
         var fieldList=formModel.deleteFormFieldByID(formID,fieldID);
         res.json(fieldList);
     }
