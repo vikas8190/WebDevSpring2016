@@ -6,7 +6,7 @@
     angular
         .module("FormBuilderApp")
         .controller("FieldController",FieldController);
-    function FieldController($rootScope,$routeParams,UserService,FieldService,$scope,$location,$uibModal){
+    function FieldController($rootScope,$routeParams,UserService,FormService,FieldService,$scope,$location,$uibModal){
         var vm = this;
         var formID = $routeParams.formID;
         function init() {
@@ -19,12 +19,28 @@
             vm.deleteField=deleteField;
             vm.editField=editField;
             if(formID) {
+                vm.formID=formID;
                 FieldService
                     .getFieldsForForm(formID)
                     .then(function(res){
                         vm.fields = res.data;
                     });
+
             }
+            $scope.sortableFields = {
+                disabled: false,
+                update: function(event) {
+                    FormService.getFormByID($scope.model.formID)
+                        .then(function(res){
+                            if(res.data){
+                                var curForm=res.data;
+                                curForm.fields=vm.fields;
+                                FormService.updateFormById($scope.model.formID,curForm);
+                            }
+                        });
+                    return true;
+                }
+            };
         }
         init();
 

@@ -62,6 +62,10 @@ module.exports=function(){
         for (var i = 0; i < forms.length; i++) {
             if (forms[i]._id == formID) {
                 forms[i].title = form.title;
+                if(form.fields!=null)
+                {
+                    forms[i].fields=form.fields;
+                }
                 return forms[i];
             }
         }

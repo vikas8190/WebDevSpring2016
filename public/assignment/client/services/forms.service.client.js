@@ -11,7 +11,8 @@
             createFormForUser:createFormForUser,
             findAllFormsForUser:findAllFormsForUser,
             deleteFormById:deleteFormById,
-            updateFormById:updateFormById
+            updateFormById:updateFormById,
+            getFormByID:getFormByID
         };
         return service;
         function createFormForUser(userId, form){
@@ -27,10 +28,11 @@
             return $http.delete("/api/assignment/form/"+formId);
         }
         function updateFormById(formId, newForm){
-            console.log("update form by id sending put request");
-            console.log("new form:");
-            console.log(newForm);
+            console.log("called update form 1:");
             return $http.put("/api/assignment/form/"+formId,newForm);
+        }
+        function getFormByID(formID){
+            return $http.get("/api/assignment/form/"+formID);
         }
     }
 })();
