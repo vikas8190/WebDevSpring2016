@@ -8,253 +8,149 @@
                 <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
             </ul>
             <div class="table table-responsive table-bordered">
-            <div class="container-fluid field-container">
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <br>
-                        <div>First Name:</div>
-                        <input type="text" class="form-control" id="Inputusername" placeholder="First Name">
-                    </div><br>
-                    <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div><br>
-
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div>Last Name:</div>
-                        <input type="text" class="form-control" id="inputlastname" placeholder="Last Name"></div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        </div>
-                </div><br>
-
-                <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
-                     aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span>
-                                    <span class="sr-only">Close</span>
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel">
-                                    Field Properties
-                                </h4>
-                            </div>
-
-                            <!-- Modal Body -->
-                            <div class="modal-body">
-
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputlabel">Label</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputlabel" placeholder="Label"/>
+                <form>
+                    <div class="container-fluid field-container">
+                        <div ui-sortable>
+                            <div ng-repeat="field in model.fields" class="row form-group">
+                                <br />
+                                <div ng-switch="field.type">
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <div>{{field.label}}: </div>
+                                        <!-- Single line text -->
+                                        <div ng-switch-when="TEXT" class="top-padding">
+                                            <input type="text" class="form-control" placeholder="{{field.placeholder}}" />
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputplaceholder">Placeholder</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputplaceholder" placeholder="Label"/>
+                                        <!-- Multi line text -->
+                                        <div ng-switch-when="TEXTAREA" class="top-padding">
+                                            <textarea class="form-control" rows="4" placeholder="{{field.placeholder}}"></textarea>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputtooltip">Tooltip</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputtooltip" placeholder="Tooltip"/>
+                                        <!-- Date -->
+                                        <div ng-switch-when="DATE" class="top-padding">
+                                            <input type="date" class="form-control" placeholder="{{field.placeholder}}" />
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputtype" >Type</label>
-                                        <div class="col-sm-10">
-                                            <select id="inputtype" class="form-control">
-                                                <option value="SingleLineText">Single Line Text</option>
-                                                <option value="Datefield">Date</option>
-                                                <option value="DropDownField">Drop Down</option>
-                                                <option value="CheckboxesField">Checkboxes</option>
-                                                <option value="RadioButtonsfield">Radio Buttons</option>
-                                                <option value="ParagraphTextfield">Paragraph Text Field</option>
+                                        <!-- Options -->
+                                        <div ng-switch-when="OPTIONS" class="top-padding">
+                                            <select ng-model="userOption" class="form-control"
+                                                    ng-options="opt.value as opt.label for opt in {{field.options}}">
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputtooltip">Options</label>
-                                        <div class="col-sm-10">
-                                            <select id="leftValues" class="form-control" size="5" multiple>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option></select>
+                                        <!-- Checkboxes -->
+                                        <div ng-switch-when="CHECKBOXES" class="top-padding">
+                                            <div class="checkbox" ng-repeat="opt in field.options">
+                                                <label>
+                                                    <input type="checkbox" class="checkbox" ng-value="opt.value" placeholder="{{field.placeholder}}" />
+                                                    {{opt.label}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- Radios -->
+                                        <div ng-switch-when="RADIOS" class="top-padding">
+                                            <div class="radio" ng-repeat="opt in field.options">
+                                                <label>
+                                                    <input type="radio" ng-value="opt.value" placeholder="{{field.placeholder}}" />
+                                                    {{opt.label}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- Email -->
+                                        <div ng-switch-when="EMAIL" class="top-padding">
+                                            <input type="email" class="form-control" placeholder="{{field.placeholder}}" />
                                         </div>
                                     </div>
-                                </form>
+                                    <div class="col-xs-6 col-sm-6 col-md-6 control-edit-options">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-default outline" data-toggle="modal" data-target="#optEditModal"
+                                                    aria-label="Edit Field" ng-click="model.recordFieldEdit(field)">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default outline" aria-label="Clone Field">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default outline"
+                                                    aria-label="Remove Field" ng-click="model.deleteField(field)">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-default outline" aria-label="Reorder Field">
+                                                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- Modal Footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">
-                                    Ok
-                                </button>
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">
-                                    Cancel
-                                </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="divider"></div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div>Add New Field: </div>
+                                <div class="top-padding">
+                                    <select ng-model="model.fieldType" class="form-control">
+                                        <option value="TEXT">Single Line Text</option>
+                                        <option value="DATE">Date</option>
+                                        <option value="OPTIONS">Dropdown</option>
+                                        <option value="CHECKBOXES">Checkboxes</option>
+                                        <option value="RADIOS">Radio buttons</option>
+                                        <option value="TEXTAREA">Paragraph Text Field</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 control-edit-options">
+                                <div class="btn-group" role="group">
+                                    <button ng-click="model.addField(model.fieldType)" type="button" class="btn btn-default outline"
+                                            aria-label="Clone Field">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="optEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Field Properties</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                                <div>Label: </div>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 control-edit-options">
+                                                <input ng-model="model.curFieldLabel" type="text" class="form-control" id="inputlabel" placeholder="Label" />
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="model.curFieldPlaceholder">
+                                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                                <div>Placeholder: </div>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 control-edit-options">
+                                                <input ng-model="model.curFieldPlaceholder" type="text" class="form-control" id="inputPlaceholder" placeholder="Placeholder" />
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="model.curFieldOptions">
+                                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                                <div>Options: </div>
+                                            </div>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 control-edit-options">
+                                                <textarea ng-model="model.curFieldOptions" class="form-control" rows="5" placeholder="Option1<br/>Option2<br/>Option3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Update</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetEditRecording">Cancel</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div>Date Of Birth:</div>
-                        <input type="date" class="form-control" id="datepicker" placeholder="Select Date"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        </button>
-                        </div>
-                    </div>
-                    </div>
-                    <br>
-
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div>Gender:</div>
-                        <select id="inputgender" class="form-control">
-                            <option value="Male">Male</option>
-                            <option value="Male">Female</option>
-                        </select></div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        </button>
-                    </div></div>
-                </div>
-                <!--Checkbox for roles-->
-                <br>
-
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div>Roles:</div>
-                        <div class="checkbox">
-                        <label><input type="checkbox" id="inputroles1" value="Admin">Admin</label></div>
-                        <div class="checkbox">
-                        <label><input type="checkbox" id="inputroles2" value="Student">Student</label></div>
-                        <div class="checkbox">
-                        <label><input type="checkbox" id="inputroles3" value="User">User</label></div>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        </button>
-                    </div></div><br>
-                </div>
-
-                <!--Checkbox for license agreement-->
-                <br>
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                        License Agreement:<br>
-                    <div class="radio">
-                        <label><input name="licagreement" type="radio" id="inputlic1" value="Yes">Yes</label>
-                    </div>
-                        <div class="radio">
-                            <label><input name="licagreement" type="radio" id="inputlic2" value="No">No</label></div></div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align" data-toggle="modal" data-target="#myModalHorizontal">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default outline" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                        </button></div></div>
-                    <br>
-                    </div>
-                <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
-
-                <!-- field selection-->
-                <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">
-                <div>Add New Field:</div>
-                <select id="inputaddnewfield" class="form-control">
-                    <option value="SingleLineText">Single Line Text</option>
-                    <option value="Datefield">Date</option>
-                    <option value="DropDownField">Drop Down</option>
-                    <option value="CheckboxesField">Checkboxes</option>
-                    <option value="RadioButtonsfield">Radio Buttons</option>
-                    <option value="ParagraphTextfield">Paragraph Text Field</option>
-                </select></div>
-                <div class="col-xs-6 col-sm-6 col-md-6 align-button">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default outline" aria-label="Left Align Align">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                </div></div></div>
-            <br>
-            </div></div>
-
-        </div>
-</div></div>
+                </form>
+</div></div></div>
+</div>

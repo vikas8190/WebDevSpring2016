@@ -19,8 +19,6 @@
                         if(res.data){
                             $rootScope.user = res.data;
                             //UserService.setCurrentUser(res.data);
-                            console.log("setting logged in user:");
-                            console.log(res.data);
                             $scope.$location.path("/profile");
                         }
                         else {

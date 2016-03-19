@@ -6,12 +6,12 @@
     angular
         .module("FormBuilderApp")
         .controller("FormController",FormController);
-    function FormController($scope,$rootScope,FormService){
+    function FormController($scope,$rootScope,FormService,$location){
         var selectedForm=null;
         var m=this;
         function init(){
             console.log("init called !!");
-            $scope.renderform=renderform;
+            $scope.loadFormFields=loadFormFields;
             $scope.deleteForm=deleteForm;
             $scope.updateForm=updateForm;
             $scope.addForm=addForm;
@@ -88,8 +88,8 @@
             $scope.inputform={
                 title:form.title};
         }
-        function renderform(forms){
-            $scope.forms=forms;
+        function loadFormFields(formID){
+            $location.url("form/"+formID+"/fields");
         }
     }
 })();

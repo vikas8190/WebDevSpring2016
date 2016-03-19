@@ -31,7 +31,8 @@
                     </tr>
                     <!--<tr ng-repeat="formname in forms.title">-->
                     <tr ng-repeat="form in forms">
-                        <td>{{form.title}}</td>
+                        <td data-title="Form Name">
+                            <a class="form-name" href ng-click="loadFormFields(form._id)">{{form.title}}</a></td>
                         <td>
                             <div class="btn-group" role="group">
                                 <button ng-click="deleteForm(form._id)" type="button" class="btn btn-default outline" aria-label="Left Align">

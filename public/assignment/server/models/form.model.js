@@ -11,6 +11,7 @@ module.exports=function(){
         updateFormByID:updateFormByID,
         deleteFormByID:deleteFormByID,
         findFormByTitle:findFormByTitle,
+        findAllFormFieldsForFormID:findAllFormFieldsForFormID,
         findFormFieldByID:findFormFieldByID,
         deleteFormFieldByID: deleteFormFieldByID,
         createFormField: createFormField,
@@ -76,6 +77,8 @@ module.exports=function(){
     }
 
     function findAllFormFieldsForFormID(formID){
+        console.log("get all form fields for formID:");
+        console.log(formID);
         for(var form in forms){
             if(forms[form]._id==formID){
                 return forms[form].fields;
@@ -100,14 +103,15 @@ module.exports=function(){
 
     function deleteFormFieldByID(formID,fieldID){
         for(var form in forms){
+            var newFieldList=[];
             if(forms[form]._id==formID){
                 for(var f in forms[form].fields){
-                    if(forms[form].fields[f]._id==fieldID){
-                        forms[form].fields[f].splice(f,1);
-                        return forms[form];
+                    if(forms[form].fields[f]._id!=fieldID){
+                        newFieldList.push(forms[form].fields[f]);
                     }
                 }
-                break;
+                forms[form].fields=newFieldList;
+                return forms[form];
             }
         }
         return null;
@@ -117,7 +121,8 @@ module.exports=function(){
             _id:uuid.v4(),
             label:field.label,
             type:field.type,
-            placeholder:field.placeholder
+            placeholder:field.placeholder,
+            options:field.options
         };
         for(var form in forms){
             if(forms[form]._id==formID){

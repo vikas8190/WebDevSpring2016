@@ -33,9 +33,10 @@
                 templateUrl:"/assignment/client/views/forms/forms.view.html",
                 controller: "FormController as controller"
             })
-            .when("/fields",{
+            .when("/form/:formID/fields",{
                 templateUrl:"/assignment/client/views/forms/fields.view.html",
-                controller: "FieldController as controller"
+                controller: "FieldController",
+                controllerAs: "model"
             });
     }
 })();

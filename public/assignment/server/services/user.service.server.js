@@ -58,7 +58,6 @@ module.exports=function(app,userModel){
         res.json(user);
     }
     function getUserByUsername(req,res) {
-        console.log("get user by username");
         var username=req.query.username;
         var user=userModel.findUserByUsername(username);
         res.json(user);
