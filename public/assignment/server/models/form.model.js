@@ -126,7 +126,12 @@ module.exports=function(){
         };
         for(var form in forms){
             if(forms[form]._id==formID){
-                forms[form].fields.push(newField);
+                if(forms[form].fields==null){
+                    forms[form].fields=[newField];
+                }
+                else {
+                    forms[form].fields.push(newField);
+                }
                 return forms[form];
             }
         }
@@ -141,7 +146,8 @@ module.exports=function(){
                         forms[form].fields[f].label=field.label;
                         forms[form].fields[f].type=field.type;
                         forms[form].fields[f].placeholder=field.placeholder;
-                        return forms[form];
+                        forms[form].fields[f].options=field.options;
+                        return forms[form].fields;
                     }
                 }
                 break;

@@ -6,25 +6,22 @@
     angular
         .module("FormBuilderApp")
         .controller("FieldController",FieldController);
-    function FieldController($rootScope,$routeParams,UserService,FieldService,$scope,$location){
+    function FieldController($rootScope,$routeParams,UserService,FieldService,$scope,$location,$uibModal){
         var vm = this;
         var formID = $routeParams.formID;
-
         function init() {
             if ($rootScope.user==null) {
                 $location.path("#/home");
-            }
-            console.log("init formid here:");
-            console.log(formID);
+            };
             vm.recordFieldEdit=recordFieldEdit;
             vm.addField=addField;
             vm.resetEditRecording=resetEditRecording;
             vm.deleteField=deleteField;
+            vm.editField=editField;
             if(formID) {
                 FieldService
                     .getFieldsForForm(formID)
                     .then(function(res){
-                        console.log(res);
                         vm.fields = res.data;
                     });
             }
@@ -32,7 +29,6 @@
         init();
 
         function recordFieldEdit(field) {
-            console.log("record field edit called");
             resetEditRecording();
             vm.curField = field;
             vm.curFieldLabel=field.label;
@@ -56,7 +52,6 @@
         }
 
         function addField(fieldType) {
-            console.log("called add field");
             var newField = {}
             if (fieldType == "TEXT") {
                 newField._id = null;
@@ -106,7 +101,6 @@
             FieldService
                 .createFieldForForm(formID, newField)
                 .then(function(res){
-                    console.log(res.data);
                     vm.fields = res.data.fields;
                 });
         }
@@ -115,11 +109,68 @@
             FieldService
                 .deleteFieldFromForm(formID, field._id)
                 .then(function (res) {
-                    console.log(res.data);
                     vm.fields = res.data.fields;
                 });
         }
 
-        $scope.$location=$location;
+        //$scope.$location=$location;
+
+    function editField($index) {
+        vm.curEditField = vm.fields[$index];
+        var modalInstance = $uibModal.open( {
+            templateUrl: 'EditFieldModal.html',
+            controller: 'ModalController',
+            resolve: {
+                field: function () {
+                    return vm.curEditField;
+                }
+            }
+        });
+        modalInstance.result
+            .then(function (field) {
+                FieldService.updateField(formID, field._id, field)
+                    .then(function(res){
+                        vm.fields = res.data;
+                    });
+            });
+
     }
+}
+
+angular.module('FormBuilderApp').controller('ModalController', function ($scope, $uibModalInstance, field) {
+
+    $scope.field = field;
+    $scope.ok = function () {
+        if($scope.newLabel) {
+            $scope.field.label = $scope.newLabel;
+        }
+        if($scope.field.type != "DATE") {
+            if($scope.newPlaceholder) {
+                if($scope.field.type === "TEXT" || $scope.field.type === "TEXTAREA") {
+                    $scope.field.placeholder = $scope.newPlaceholder;
+                } else {
+                    UpdateOptions();
+                }
+            }
+        }
+
+        function UpdateOptions() {
+            var content = $scope.newPlaceholder;
+            content = content.trim();
+            var rawOptions = content.split("\n");
+            var options = [];
+            for (var i in rawOptions) {
+                var rawField = rawOptions[i].split(":");
+                var option = {label: rawField[0], value: rawField[1]};
+                options.push(option);
+            }
+            $scope.field.options = options;
+        }
+        $uibModalInstance.close($scope.field);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
 })();
