@@ -11,7 +11,6 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.get('/hello', function(req, res){
     res.send('hello world');
 });
-console.log("here including........");
 require("./public/assignment/server/app.js")(app);
 app.listen(port, ipaddress);
 
