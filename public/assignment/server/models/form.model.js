@@ -1,36 +1,36 @@
 /**
- * Created by vilas on 18-03-2016.
- */
-/**
  * Created by vilas on 17-03-2016.
  */
-module.exports=function(app){
-    var forms=require('./form.mock.json');
-    var uuid=require(node-uuid);
+var forms=require('./form.mock.json');
+var uuid=require('node-uuid');
+module.exports=function(){
     var api={
         createFormForUser:createFormForUser,
         findAllFormForUser:findAllFormForUser,
         findFormByID:findFormByID,
         updateFormByID:updateFormByID,
         deleteFormByID:deleteFormByID,
-        findFormByTitle:findFormByTitle
+        findFormByTitle:findFormByTitle,
+        findFormFieldByID:findFormFieldByID,
+        deleteFormFieldByID: deleteFormFieldByID,
+        createFormField: createFormField,
+        updateFormFieldByID: updateFormFieldByID
     };
     return api;
 
 
     function createFormForUser(userID,form) {
-        var last_userID=users[users.length-1]._id;
         var newForm= {
             _id: uuid.v4(),
             title:form.title,
-            userId:userId,
+            userId:userID,
             fields:form.fields
         };
-        users.push(newForm);
+        forms.push(newForm);
         return newForm;
     }
     function findAllFormForUser(userID) {
-        var userForms=null;
+        var userForms=[];
         for(var i=0;i<forms.length;i++){
             if(forms[i].userId==userID) {
                 userForms.push(forms[i]);
@@ -47,27 +47,28 @@ module.exports=function(app){
         }
     }
 
-    function filterForms(form,formID){
-        return form._id!=formID;
-    }
-
     function deleteFormByID(formID) {
-        forms=forms.filter(filterForms,formID);
-        return forms;
+        for(var i in forms){
+            if(forms[i]._id==formID){
+                console.log("deleting by splicing");
+                forms.splice(i,1);
+                return forms;
+            }
+        }
     }
 
 
     function updateFormByID(formID,form) {
-        for (var i = 0; i < form.length; i++) {
+        for (var i = 0; i < forms.length; i++) {
             if (forms[i]._id == formID) {
-                forms[i] = form;
+                forms[i].title = form.title;
                 return forms[i];
             }
         }
     }
 
     function findFormByTitle(title) {
-        for (var i = 0; i < form.length; i++) {
+        for (var i = 0; i < forms.length; i++) {
             if (forms[i].title == title) {
                 return forms[i];
             }
@@ -144,3 +145,4 @@ module.exports=function(app){
         return null;
     }
 }
+

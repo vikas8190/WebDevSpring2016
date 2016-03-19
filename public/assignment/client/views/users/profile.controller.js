@@ -14,21 +14,25 @@
             $scope.puser={firstName:$rootScope.user.firstName,
                 lastName:$rootScope.user.lastName,
                 username:$rootScope.user.username,
+                password:$rootScope.user.password,
                 email:$rootScope.user.email};
         }
         //declare event handlers
         $scope.update=update;
         function update(user){
-            UserService.updateUser($rootScope.user._id,user,update_user);
-        }
-        function update_user(user){
-            if(user!=null) {
-                $rootScope.user = user;
-                $scope.SuccessAlert=true;
-                $timeout(function(){
-                    $scope.SuccessAlert=false;
-                },2000);
-            }
+            UserService.updateUser($rootScope.user._id,user)
+                .then(function(res){
+                    console.log(res);
+                    if(res.data){
+                        $rootScope.user = res.data;
+                        console.log("user after updation:");
+                        console.log($rootScope.user);
+                        $scope.SuccessAlert=true;
+                        $timeout(function(){
+                            $scope.SuccessAlert=false;
+                        },2000);
+                    }
+                });
         }
     }
 })();

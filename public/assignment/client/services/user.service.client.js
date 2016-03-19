@@ -6,7 +6,7 @@
     angular
         .module("FormBuilderApp")
         .factory("UserService",UserService);
-    function UserService() {
+    function UserService($http) {
         var users=[
             {        "_id":123, "firstName":"Alice",            "lastName":"Wonderland",
                 "username":"alice",  "password":"alice",   "roles": ["student"]                },
@@ -28,54 +28,21 @@
         };
 
         return service;
-        function findUserByCredentials(username, password, callback) {
-            var userindex=-1;
-            for(var i=0;i<users.length;i++)
-            {
-                if(users[i].username==username && users[i].password==password )
-                {
-                    userindex=i;
-                    break;
-                }
-            }
-            if(userindex!=-1)
-            {
-                callback(users[userindex]);
-            }
-            else
-            {
-               callback(null);
-            }
+        function findUserByCredentials(username, password) {
+            console.log("calling service get to server");
+            return $http.get("/api/assignment/user?username="+username+"&password="+password);
         }
-        function createUser(user,callback){
-            user._id=(new Date).getTime();
-            user.roles="[student]";
-            users.push(user);
-            callback(user);
+        function createUser(user){
+            return $http.post("/api/assignment/user",user);
         }
-        function findAllUsers(callback){
-            callback(users);
+        function findAllUsers(){
+            return $http.get("/api/assignment/user");
         }
-        function deleteUserById(userId, callback){
-            for(var i=0;i<users.length;i++){
-                if(users[i]._id==userid){
-                    users.splice(i,1);
-                    break;
-                }
-            }
-            callback(users);
+        function deleteUserById(userId){
+            return $http.delete("/api/assignment/user/"+userId);
         }
-        function updateUser(userId, user, callback){
-            for(var i=0;i<users.length;i++){
-                if(users[i]._id==userId){
-                    users[i].password=user.password;
-                    users[i].firstName=user.firstName;
-                    users[i].lastName=user.lastName;
-                    users[i].email=user.email;
-                    break;
-                }
-            }
-            callback(users[i]);
+        function updateUser(userId, user){
+            return $http.put("/api/assignment/user/"+userId,user);
         }
     }
 })();

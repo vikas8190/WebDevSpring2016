@@ -3,12 +3,12 @@
  */
 module.exports=function(app,userModel){
     app.post('/api/assignment/user',createUser);
+    //app.get('/api/assignment/user?username=:username&password=:password',getUserByCredentials);
+    //app.get('/api/assignment/user?username=:username',getUserByUsername);
     app.get('/api/assignment/user',getAllUsers);
-    app.post('/api/assignment/user/:id',getUserByID);
+    app.get('/api/assignment/user/:id',getUserByID);
     app.put('/api/assignment/user/:id',updateUserByID);
     app.delete('/api/assignment/user/:id',deleteUserByID);
-    app.post('/api/assignment/user?username=username&password=password',getUserByCredentials);
-    app.post('/api/assignment/user?username=username',getUserByUsername);
     function createUser(req,res) {
         var user=req.body;
         var users=null;
@@ -16,7 +16,21 @@ module.exports=function(app,userModel){
         res.json(users);
     }
     function getAllUsers(req,res) {
-        var users=userModel.findAllUsers();
+        var users=null;
+        if(req.query.username&&req.query.password){
+            var credentials={
+                username:req.query.username,
+                password:req.query.password
+            };
+            users=userModel.findUserByCredentials(credentials);
+        }
+        else if(req.query.username){
+            var username=req.query.username;
+            users=userModel.findUserByUsername(username);
+        }
+        else{
+            users=userModel.findAllUsers();
+        }
         res.json(users);
     }
     function getUserByID(req,res) {
@@ -27,7 +41,7 @@ module.exports=function(app,userModel){
     function updateUserByID(req,res) {
         var userID=req.params.id;
         var user=req.body;
-        var updatedUser=userModel.updateUser(userID,user);
+        var updatedUser=userModel.updateUserByID(userID,user);
         res.json(updatedUser);
     }
     function deleteUserByID(req,res) {
@@ -37,14 +51,15 @@ module.exports=function(app,userModel){
     }
     function getUserByCredentials(req,res) {
         var credentials={
-            username:req.params.username,
-            password:req.params.password
+            username:req.query.username,
+            password:req.query.password
         };
         var user=userModel.findUserByCredentials(credentials);
         res.json(user);
     }
     function getUserByUsername(req,res) {
-        var username=req.params.username;
+        console.log("get user by username");
+        var username=req.query.username;
         var user=userModel.findUserByUsername(username);
         res.json(user);
     }

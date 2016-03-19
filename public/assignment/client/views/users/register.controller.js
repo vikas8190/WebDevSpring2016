@@ -11,17 +11,18 @@
         $scope.register=register;
 
         function register(user){
-            UserService.createUser(user,redirect);
-        }
-        function redirect(user){
-            if(user) {
-                $scope.SuccessAlert=true;
-                $timeout(function(){
-                    $scope.SuccessAlert=false;
-                },2000);
-                $rootScope.user = user;
-                $scope.$location.path("/profile");
-            }
+            UserService.createUser(user)
+                .then(function(res){
+                    console.log(res);
+                    if(res.data){
+                        $scope.SuccessAlert=true;
+                        $timeout(function(){
+                            $scope.SuccessAlert=false;
+                        },2000);
+                        $rootScope.user = res.data;
+                        $scope.$location.path("/profile");
+                    }
+                })
         }
     }
 })();

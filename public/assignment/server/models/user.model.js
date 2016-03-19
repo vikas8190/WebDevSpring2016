@@ -1,8 +1,9 @@
 /**
  * Created by vilas on 17-03-2016.
  */
-module.exports=function(app){
-    var users=require('./user.mock.json');
+var users=require('./user.mock.json');
+module.exports=function(){
+
 
     var api={
         createUser:createUser,
@@ -17,7 +18,7 @@ module.exports=function(app){
 
 
     function findAllUsers() {
-            return users;
+        return users;
     }
 
     function findUserByID(userID) {
@@ -52,14 +53,19 @@ module.exports=function(app){
         return newUser;
     }
 
-   function updateUserByID(userID,user) {
-       for (var i = 0; i < users.length; i++) {
-           if (users[i]._id == userID) {
-               users[i] = user;
-               return users[i];
-           }
-       }
-   }
+    function updateUserByID(userID,user) {
+        for (var i = 0; i < users.length; i++) {
+            if (users[i]._id == userID) {
+                users[i].firstName = user.firstName;
+                users[i].lastName = user.lastName;
+                users[i].username = user.username;
+                users[i].password = user.password;
+                users[i].email = user.email;
+                users[i].roles = user.roles;
+                return users[i];
+            }
+        }
+    }
 
     function findUserByUsername(username) {
         for(var user in users){
