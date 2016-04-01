@@ -7,6 +7,10 @@
         .module("FormBuilderApp")
         .controller("HomeController",HomeController);
     function HomeController($scope,$rootScope,$location){
-        $scope.$location=$location;
+        var vm=this;
+        function init() {
+            $scope.$location = $location;
+        }
+        init();
     }
 })();

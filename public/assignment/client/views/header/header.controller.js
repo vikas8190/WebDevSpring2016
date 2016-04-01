@@ -6,12 +6,20 @@
     angular
         .module("FormBuilderApp")
         .controller("HeaderController",HeaderController);
-    function HeaderController($scope,$rootScope,$location){
-        $scope.$location=$location;
-        $scope.logout=logout;
+    function HeaderController($rootScope,$location,UserService){
+        var vm=this;
+        function init() {
+            vm.$location = $location;
+        }
+        init();
+        vm.logout = logout;
         function logout(user){
-            $rootScope.user=null;
-            $scope.$location.path("/home");
+            console.log("called logout");
+            UserService.logout()
+                .then(function(response) {
+                    UserService.setCurrentUser(null);
+                    $location.url("/home");
+            });
         }
     }
 })();

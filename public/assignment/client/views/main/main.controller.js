@@ -7,8 +7,12 @@
         .module("FormBuilderApp")
         .controller("MainController",MainController);
     function MainController($scope,$location,$route){
-        $scope.$location=$location;
-        $scope.$route=$route;
-        $scope.$location.path("/home");
+        var vm=this;
+        function init() {
+            $scope.$location = $location;
+            $scope.$route = $route;
+            $scope.$location.path("/home");
+        }
+        init();
     }
 })();

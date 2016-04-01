@@ -49,10 +49,6 @@ module.exports=function($q){
         return deferred.promise;
     }
 
-    function filterUsers(user,userID){
-        return user._id!=userID;
-    }
-
     function deleteUserByID(userID) {
         var deferred=q.defer();
         User.remove(
@@ -69,12 +65,18 @@ module.exports=function($q){
     }
 
     function createUser(user) {
+        console.log("creating user:");
+        console.log(user);
         var deferred=q.defer();
         User.create(
+            user,
             function(err,stats){
                 if(!err){
+                    console.log("create resolved");
+                    console.log(stats);
                     deferred.resolve(stats);
                 }else{
+                    console.log("create rejected");
                     deferred.reject(err);
                 }
             }
@@ -83,6 +85,9 @@ module.exports=function($q){
     }
 
     function updateUserByID(userID,user) {
+        console.log("update user model");
+        console.log(userID);
+        console.log(user);
         var deferred = q.defer();
         User
             .update (
@@ -100,28 +105,37 @@ module.exports=function($q){
     }
 
     function findUserByUsername(username) {
+        console.log("find user by username model");
+        console.log(username);
         var deferred = q.defer ();
         User
             .findOne (
                 {username: username},
                 function (err, user) {
                     if (!err) {
+                        console.log("find resolved");
+                        console.log(user);
                         deferred.resolve(user);
                     } else {
+                        console.log("find rejected");
                         deferred.reject(err);
                     }
                 }
             );
         return deferred.promise;
     }
+
     function findUserByCredentials(credentials) {
+        console.log("credentals");
+        console.log(credentials);
         var deferred = q.defer ();
         User
             .findOne (
-                {username: username},
-                {password: password},
+                {username: credentials.username,password:credentials.password},
                 function (err, user) {
                     if (!err) {
+                        console.log("user found in DB");
+                        console.log(user);
                         deferred.resolve(user);
                     } else {
                         deferred.reject(err);

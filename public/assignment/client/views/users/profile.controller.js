@@ -7,30 +7,50 @@
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
     function ProfileController($scope,$rootScope,$timeout,UserService){
-        if($scope.user==null){
-            $scope.$location.path("/home");
+        var vm=this;
+
+        function init(){
+            if($rootScope.currentUser==null){
+                $scope.$location.path("/home");
+            }
+            else {
+                console.log("rootscope user:");
+                console.log($rootScope.currentUser);
+                vm.puser =
+                {
+                    firstName: $rootScope.currentUser.firstName,
+                    lastName: $rootScope.currentUser.lastName,
+                    username: $rootScope.currentUser.username,
+                    password: $rootScope.currentUser.password,
+                    email: $rootScope.currentUser.email
+                };
+            }
         }
-        else{
-            $scope.puser={firstName:$rootScope.user.firstName,
-                lastName:$rootScope.user.lastName,
-                username:$rootScope.user.username,
-                password:$rootScope.user.password,
-                email:$rootScope.user.email};
-        }
+        init();
         //declare event handlers
-        $scope.update=update;
+        vm.update=update;
+
         function update(user){
-            UserService.updateUser($rootScope.user._id,user)
-                .then(function(res){
-                    console.log(res);
-                    if(res.data){
-                        $rootScope.user = res.data;
-                        console.log("user after updation:");
-                        console.log($rootScope.user);
-                        $scope.SuccessAlert=true;
-                        $timeout(function(){
-                            $scope.SuccessAlert=false;
-                        },2000);
+            console.log("update called");
+            console.log($rootScope.currentUser);
+            UserService.updateUser($rootScope.currentUser._id,user)
+                .then(function(response){
+                    console.log(response);
+                    if(response.data){
+                        UserService.findUserByID($rootScope.currentUser._id)
+                            .then (function (res) {
+                                console.log("response of updated user");
+                                console.log(res);
+                                vm.puser.username = res.data.username;
+                                vm.puser.firstName = res.data.firstName;
+                                vm.puser.lastName = res.data.lastName;
+                                vm.puser.email = res.data.email;
+                                UserService.setCurrentUser(res.data);
+                                $scope.SuccessAlert = true;
+                                $timeout(function () {
+                                    $scope.SuccessAlert = false;
+                                }, 2000);
+                            })
                     }
                 });
         }

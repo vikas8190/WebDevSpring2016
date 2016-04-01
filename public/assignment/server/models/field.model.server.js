@@ -1,14 +1,11 @@
 /**
  * Created by vilas on 17-03-2016.
  */
-var mongoose = require("mongoose");
-var q = require("q");
 
-module.exports=function(){
-    var FieldSchema = require("./field.schema.server.js")();
-    var Field = mongoose.model("Field", FieldSchema);
-    var FormSchema = require("./form.schema.server.js")();
-    var Form = mongoose.model("Form", FormSchema);
+module.exports=function(formModel){
+
+    var Form = formModel.getMongooseModel();
+
     var api={
         findFormFieldByID:findFormFieldByID,
         deleteFormFieldByID: deleteFormFieldByID,
@@ -17,10 +14,11 @@ module.exports=function(){
     };
     return api;
 
-
-
     function findFormFieldByID(formID,fieldID){
-
+        return Form.findById(formID)
+            .then(function(form){
+                return form.fields.id(fieldID);
+            });
     }
 
     function deleteFormFieldByID(formID,fieldID){

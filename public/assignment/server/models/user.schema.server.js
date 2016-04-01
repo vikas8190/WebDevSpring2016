@@ -9,7 +9,7 @@ module.exports = function () {
         password: String,
         firstName: String,
         lastName: String,
-        emails :[String],
+        email :String,
         phones : [String]
     }, {collection: 'user'});
     return UserSchema;

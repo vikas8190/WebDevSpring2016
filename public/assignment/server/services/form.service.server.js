@@ -12,28 +12,64 @@ module.exports=function(app,formModel){
     function getAllFormForUserID(req,res) {
         var userID=req.params.userID;
         var forms=formModel.findAllFormForUser(userID);
-        res.json(forms);
+        formModel.findAllFormForUser(userID)
+            .then(function(forms){
+                    console.log("returning response");
+                    res.json(forms);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
     function getFormByID(req,res) {
         var formID=req.params.formID;
         var form=formModel.findFormByID(formID);
-        res.json(form);
+        formModel.findFormByID(formID)
+            .then(function(form){
+                    console.log("returning response");
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
+
     function deleteFormByID(req,res) {
         var formID=req.params.formID;
         var forms=formModel.deleteFormByID(formID);
-        res.json(forms);
+        formModel.deleteFormByID(formID)
+            .then(function(form){
+                    console.log("returning response");
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
+
     function createForm(req,res) {
         var userID = req.params.userID;
         var form=req.body;
-        var newForm=formModel.createFormForUser(userID,form);
-        res.json(newForm);
+        formModel.createFormForUser(userID,form)
+            .then(function(form){
+                console.log("returning response");
+                res.json(form);
+            },
+            function(err){
+                res.status(400).send(err);
+            });
     }
     function updateFormByID(req,res) {
         var formID = req.params.formID;
         var form=req.body;
         var updatedForm=formModel.updateFormByID(formID,form);
-        res.json(updatedForm);
+        formModel.updateFormByID(formID,form)
+            .then(function(updatedform){
+                    console.log("returning response");
+                    res.json(updatedform);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 }

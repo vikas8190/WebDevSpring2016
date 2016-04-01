@@ -8,37 +8,72 @@ module.exports=function(app,formModel){
     app.post('/api/assignment/form/:formID/field',duplicateFormField);
     app.put('/api/assignment/form/:formID/field/:fieldID',updateFormFieldByID);
 
+    var fieldModel   = require("../models/field.model.server.js")(formModel);
+
     function getAllFieldsForFormID(req,res) {
         var formID=req.params.formID;
-        var fieldList=formModel.findAllFormFieldsForFormID(formID);
-        res.json(fieldList);
+        console.log("get all fields for form id:");
+        formModel.findAllFormFieldsForFormID(formID)
+            .then(function(fields){
+                    console.log("returning response");
+                    res.json(fields);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 
     function getFormFieldByID(req,res) {
         var formID=req.params.formID;
         var fieldID=req.params.fieldID;
-        var formField=formModel.findFormFieldByID(formID,fieldID);
-        res.json(formField);
+        fieldModel.findFormFieldByID(formID,fieldID)
+            .then(function(field){
+                    console.log("returning response");
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 
     function deleteFormFieldByID(req,res) {
         var formID=req.params.formID;
         var fieldID=req.params.fieldID;
-        var fieldList=formModel.deleteFormFieldByID(formID,fieldID);
-        res.json(fieldList);
+        fieldModel.deleteFormFieldByID(formID,fieldID)
+            .then(function(field){
+                    console.log("returning response");
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 
     function duplicateFormField(req,res) {
         var formID = req.params.formID;
         var field=req.body;
-        var newFormField=formModel.createFormField(formID,field);
-        res.json(newFormField);
+        fieldModel.createFormField(formID,field)
+            .then(function(field){
+                    console.log("returning response");
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
+
     function updateFormFieldByID(req,res) {
         var formID = req.params.formID;
         var fieldID=req.params.fieldID;
         var field=req.body;
         var updatedField=formModel.updateFormFieldByID(formID,fieldID,field);
-        res.json(updatedField);
+        fieldModel.updateFormFieldByID(formID,fieldID,field)
+            .then(function(field){
+                    console.log("returning response");
+                    res.json(field);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 }

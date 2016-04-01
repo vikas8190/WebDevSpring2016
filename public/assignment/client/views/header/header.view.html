@@ -1,5 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div ng-controller="HeaderController" class="container-fluid">
+    <div ng-controller="HeaderController as model" class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navbar" aria-expanded="false" aria-controls="navbar" ng-init="navCollapsed=true" ng-click="navCollapsed=!navCollapsed">
@@ -24,19 +24,19 @@
             <!--<ul class="nav navbar-nav navbar-left">-->
             <ul class="nav navbar-nav hidden-lg">
                 <li ng-class="{'active':$location.path() == '/home'}"><a href="#/home">Home</a></li>
-                <li ng-class="{'active':$location.path() == '/profile'}"><a ng-show="user" href="#/profile">Profile</a></li>
-                <li ng-class="{'active':$location.path() == '/admin'}"><a ng-show="user && user.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
-                <li ng-class="{'active':$location.path() == '/forms'}"><a ng-show="user" href="#/forms">Forms</a></li>
+                <li ng-class="{'active':$location.path() == '/profile'}"><a ng-show="currentUser" href="#/profile">Profile</a></li>
+                <li ng-class="{'active':$location.path() == '/admin'}"><a ng-show="currentUser && currentUser.roles.indexOf('admin')>=0" href="#/admin">Admin</a></li>
+                <li ng-class="{'active':$location.path() == '/forms'}"><a ng-show="currentUser" href="#/forms">Forms</a></li>
             </ul>
         </div>
         <!--<div id="navbar" collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">-->
         <div id="navbar" collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">
         <!--<div collapse="navCollapsed" class="navbar-collapse collapse navbar-responsive-collapse">-->
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{'active':$location.path() == '/register'}"><a ng-class="{'disabled':$location.path() == '/register'}" ng-hide="user" href="#/register">Register</a></li>
-                <li ng-class="{'active':$location.path() == '/login'}"><a ng-class="{'disabled':$location.path() == '/login'}" ng-hide="user" href="#/login" class="Login">Login</a></li>
-                <li ng-class="{'active':$location.path() == '/profile'}"><a ng-class="{'disabled':$location.path() == '/profile'}" ng-show="user" href="#/profile">{{user.username}}</a></li>
-                <li><a ng-show="user" href="" ng-click="logout(user)">Logout</a></li>
+                <li ng-class="{'active':$location.path() == '/register'}"><a ng-class="{'disabled':$location.path() == '/register'}" ng-hide="currentUser" href="#/register">Register</a></li>
+                <li ng-class="{'active':$location.path() == '/login'}"><a ng-class="{'disabled':$location.path() == '/login'}" ng-hide="currentUser" href="#/login" class="Login">Login</a></li>
+                <li ng-class="{'active':$location.path() == '/profile'}"><a ng-class="{'disabled':$location.path() == '/profile'}" ng-show="currentUser" href="#/profile">{{currentUser.username}}</a></li>
+                <li><a ng-show="currentUser" href="" ng-click="model.logout(user)">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">

@@ -23,4 +23,4 @@ app.get('/hello', function(req, res){
 });
 require("./public/assignment/server/app.js")(app,db);
 app.listen(port, ipaddress);
-
+//app.listen(3000);

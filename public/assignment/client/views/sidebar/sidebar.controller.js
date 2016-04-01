@@ -8,6 +8,10 @@
         .controller("SidebarController",SidebarController);
     function SidebarController($scope,$location)
     {
-        $scope.location=$location;
+        var vm=this;
+        function init() {
+            $scope.location = $location;
+        }
+        init();
     }
 })();

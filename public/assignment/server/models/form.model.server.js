@@ -14,10 +14,14 @@ module.exports=function(){
         updateFormByID:updateFormByID,
         deleteFormByID:deleteFormByID,
         findFormByTitle:findFormByTitle,
-        findAllFormFieldsForFormID:findAllFormFieldsForFormID
+        findAllFormFieldsForFormID:findAllFormFieldsForFormID,
+        getMongooseModel:getMongooseModel
     };
     return api;
 
+    function getMongooseModel() {
+        return Form;
+    }
 
     function createFormForUser(userID,form) {
         var newForm= {
@@ -25,17 +29,22 @@ module.exports=function(){
             userId:userID,
             fields:form.fields
         };
+        console.log("creating form:");
+        console.log(newForm);
         var deferred= q.defer();
         Form.create(newForm,function(err,stats){
             if(err){
                 deferred.reject(err);
             }else{
+                console.log("created form");
+                console.log(stats);
                 deferred.resolve(stats);
             }
         });
 
         return deferred.promise;
     }
+
     function findAllFormForUser(userID) {
         var deferred = q.defer ();
         Form.find (
