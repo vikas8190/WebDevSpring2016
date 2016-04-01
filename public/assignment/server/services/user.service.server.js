@@ -91,7 +91,8 @@ module.exports=function(app,userModel){
                         req.session.currentUser.password=user.password;
                         req.session.currentUser.firstName=user.firstName;
                         req.session.currentUser.lastName=user.lastName;
-                        req.session.currentUser.email=user.email;
+                        req.session.currentUser.emails=user.emails;
+                        req.session.currentUser.phones=user.phones;
                         res.status(200).send('Update Success');
                     }
                 }

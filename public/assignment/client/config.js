@@ -52,8 +52,9 @@
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
-
-
+            })
+            .otherwise({
+                redirectTo: "/home"
             });
     }
 
@@ -61,13 +62,15 @@
         console.log("check if logged in");
         var deferred = $q.defer();
         UserService.getCurrentUser().then(function (response) {
+            console.log(response.data);
             var currentUser = response.data;
             if (currentUser) {
                 UserService.setCurrentUser(currentUser);
                 deferred.resolve();
             } else {
-                deferred.reject();
                 $location.url("/home");
+                deferred.reject();
+
             }
         });
         return deferred.promise;

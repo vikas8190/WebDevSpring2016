@@ -24,7 +24,7 @@
                             $scope.$location.path("/profile");
                         }
                         else {
-                            $scope.errorMessage="Invalid Password!!";
+                            $scope.errorMessage="Invalid Username/Password!!";
                             $timeout(function(){
                                 $scope.errorMessage=false;
                             },2000);

@@ -10,10 +10,10 @@
         var vm = this;
         var formID = $routeParams.formID;
         function init() {
-            if ($rootScope.currentUser==null) {
-                console.log("redirecting to home");
-                $location.path("#/home");
-            };
+            //if ($rootScope.currentUser==null) {
+            //    console.log("redirecting to home");
+            //    $location.path("#/home");
+            //};
 
             vm.recordFieldEdit=recordFieldEdit;
             vm.addField=addField;

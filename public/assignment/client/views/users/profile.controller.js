@@ -6,33 +6,27 @@
     angular
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
-    function ProfileController($scope,$rootScope,$timeout,UserService){
+    function ProfileController($location,$rootScope,$timeout,UserService){
         var vm=this;
 
         function init(){
-            if($rootScope.currentUser==null){
-                $scope.$location.path("/home");
-            }
-            else {
-                console.log("rootscope user:");
-                console.log($rootScope.currentUser);
-                vm.puser =
-                {
-                    firstName: $rootScope.currentUser.firstName,
-                    lastName: $rootScope.currentUser.lastName,
-                    username: $rootScope.currentUser.username,
-                    password: $rootScope.currentUser.password,
-                    email: $rootScope.currentUser.email
-                };
-            }
+            vm.puser={};
+            UserService.findUserByID($rootScope.currentUser._id)
+                .then(function(response){
+                    vm.puser=response.data;
+                    vm.puser.emails=vm.puser.emails.join(",");
+                    vm.puser.phones=vm.puser.phones.join(",");
+                });
         }
+
         init();
+
         //declare event handlers
         vm.update=update;
 
         function update(user){
-            console.log("update called");
-            console.log($rootScope.currentUser);
+            user.emails=user.emails.trim().split(",");
+            user.phones=user.phones.trim().split(",");
             UserService.updateUser($rootScope.currentUser._id,user)
                 .then(function(response){
                     console.log(response);
@@ -44,11 +38,12 @@
                                 vm.puser.username = res.data.username;
                                 vm.puser.firstName = res.data.firstName;
                                 vm.puser.lastName = res.data.lastName;
-                                vm.puser.email = res.data.email;
+                                vm.puser.emails = res.data.emails.join(",");
+                                vm.puser.phones = res.data.phones.join(",");
                                 UserService.setCurrentUser(res.data);
-                                $scope.SuccessAlert = true;
+                                vm.SuccessAlert = true;
                                 $timeout(function () {
-                                    $scope.SuccessAlert = false;
+                                    vm.SuccessAlert = false;
                                 }, 2000);
                             })
                     }
