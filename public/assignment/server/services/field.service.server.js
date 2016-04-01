@@ -66,7 +66,6 @@ module.exports=function(app,formModel){
         var formID = req.params.formID;
         var fieldID=req.params.fieldID;
         var field=req.body;
-        var updatedField=formModel.updateFormFieldByID(formID,fieldID,field);
         fieldModel.updateFormFieldByID(formID,fieldID,field)
             .then(function(field){
                     console.log("returning response");

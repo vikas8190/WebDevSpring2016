@@ -149,11 +149,15 @@
         modalInstance.result
             .then(function (field) {
                 FieldService.updateField(formID, field._id, field)
-                    .then(function(res){
-                        vm.fields = res.data;
+                    .then(function(response){
+                        FieldService.getFieldsForForm(formID)
+                            .then(function(response){
+                                console.log("updated fields");
+                                console.log(response.data);
+                                vm.fields = response.data;
+                            })
                     });
             });
-
     }
 }
 

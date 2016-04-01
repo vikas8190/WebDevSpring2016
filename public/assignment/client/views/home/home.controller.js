@@ -6,10 +6,16 @@
     angular
         .module("FormBuilderApp")
         .controller("HomeController",HomeController);
-    function HomeController($scope,$rootScope,$location){
+    function HomeController($rootScope,$location,UserService){
         var vm=this;
         function init() {
-            $scope.$location = $location;
+            vm.$location = $location;
+            UserService.getCurrentUser()
+                .then(function(response){
+                    console.log(response.data);
+                    UserService.setCurrentUser(response.data);
+                });
+            console.log("home controlleer init");
         }
         init();
     }

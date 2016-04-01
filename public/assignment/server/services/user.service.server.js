@@ -144,6 +144,7 @@ module.exports=function(app,userModel){
 
     function loggedIn(req,res) {
         console.log("in loggedin function");
+        console.log(req.session.currentUser);
         if(!req.session.currentUser) {
             req.session.currentUser = null;
         }

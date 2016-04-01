@@ -18,6 +18,7 @@
             UserService.logout()
                 .then(function(response) {
                     UserService.setCurrentUser(null);
+                    console.log("redirecing to home:");
                     $location.url("/home");
             });
         }
