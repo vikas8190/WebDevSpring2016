@@ -29,15 +29,11 @@ module.exports=function(){
             userId:userID,
             fields:form.fields
         };
-        console.log("creating form:");
-        console.log(newForm);
         var deferred= q.defer();
         Form.create(newForm,function(err,stats){
             if(err){
                 deferred.reject(err);
             }else{
-                console.log("created form");
-                console.log(stats);
                 deferred.resolve(stats);
             }
         });
@@ -102,7 +98,6 @@ module.exports=function(){
                     if (!err) {
                         deferred.resolve(stats);
                     } else {
-                        console.log(err);
                         deferred.reject(err);
                     }
                 }

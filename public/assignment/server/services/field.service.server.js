@@ -12,10 +12,8 @@ module.exports=function(app,formModel){
 
     function getAllFieldsForFormID(req,res) {
         var formID=req.params.formID;
-        console.log("get all fields for form id:");
         formModel.findAllFormFieldsForFormID(formID)
             .then(function(fields){
-                    console.log("returning response");
                     res.json(fields);
                 },
                 function(err){
@@ -28,7 +26,6 @@ module.exports=function(app,formModel){
         var fieldID=req.params.fieldID;
         fieldModel.findFormFieldByID(formID,fieldID)
             .then(function(field){
-                    console.log("returning response");
                     res.json(field);
                 },
                 function(err){
@@ -41,7 +38,6 @@ module.exports=function(app,formModel){
         var fieldID=req.params.fieldID;
         fieldModel.deleteFormFieldByID(formID,fieldID)
             .then(function(field){
-                    console.log("returning response");
                     res.json(field);
                 },
                 function(err){
@@ -54,7 +50,6 @@ module.exports=function(app,formModel){
         var field=req.body;
         fieldModel.createFormField(formID,field)
             .then(function(field){
-                    console.log("returning response");
                     res.json(field);
                 },
                 function(err){
@@ -68,7 +63,6 @@ module.exports=function(app,formModel){
         var field=req.body;
         fieldModel.updateFormFieldByID(formID,fieldID,field)
             .then(function(field){
-                    console.log("returning response");
                     res.json(field);
                 },
                 function(err){

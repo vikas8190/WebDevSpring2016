@@ -24,7 +24,6 @@ module.exports=function(app,userModel){
     }
 
     function getAllUsers(req,res) {
-        var users=null;
         if(req.query.username&&req.query.password){
             var credentials={
                 username:req.query.username,
@@ -33,8 +32,6 @@ module.exports=function(app,userModel){
             userModel.findUserByCredentials(credentials)
                 .then(
                     function (doc) {
-                        console.log("user details");
-                        console.log(doc);
                         req.session.currentUser = doc;
                         res.json(doc);
                     },
@@ -48,8 +45,6 @@ module.exports=function(app,userModel){
             userModel.findUserByUsername(username)
                 .then(
                     function (doc) {
-                        console.log("found user returning");
-                        console.log(doc);
                         res.json(doc);
                     },
                     function (err) {
@@ -83,8 +78,6 @@ module.exports=function(app,userModel){
                     if(!doc) {
                         res.status(400).send('Update Error');
                     } else {
-                        console.log("updated success");
-                        console.log(doc);
                         req.session.currentUser.password=user.password;
                         req.session.currentUser.firstName=user.firstName;
                         req.session.currentUser.lastName=user.lastName;
@@ -141,8 +134,6 @@ module.exports=function(app,userModel){
     }
 
     function loggedIn(req,res) {
-        console.log("in loggedin function");
-        console.log(req.session.currentUser);
         if(!req.session.currentUser) {
             req.session.currentUser = null;
         }

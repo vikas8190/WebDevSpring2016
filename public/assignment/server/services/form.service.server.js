@@ -14,20 +14,18 @@ module.exports=function(app,formModel){
         var forms=formModel.findAllFormForUser(userID);
         formModel.findAllFormForUser(userID)
             .then(function(forms){
-                    console.log("returning response");
                     res.json(forms);
                 },
                 function(err){
                     res.status(400).send(err);
                 });
     }
+
     function getFormByID(req,res) {
-        console.log("get form by id");
         var formID=req.params.formID;
         var form=formModel.findFormByID(formID);
         formModel.findFormByID(formID)
             .then(function(form){
-                    console.log("returning response");
                     res.json(form);
                 },
                 function(err){
@@ -40,7 +38,6 @@ module.exports=function(app,formModel){
         var forms=formModel.deleteFormByID(formID);
         formModel.deleteFormByID(formID)
             .then(function(form){
-                    console.log("returning response");
                     res.json(form);
                 },
                 function(err){
@@ -53,24 +50,18 @@ module.exports=function(app,formModel){
         var form=req.body;
         formModel.createFormForUser(userID,form)
             .then(function(form){
-                console.log("returning response");
                 res.json(form);
             },
             function(err){
                 res.status(400).send(err);
             });
     }
+
     function updateFormByID(req,res) {
-        console.log("update form by id in server");
         var formID = req.params.formID;
         var form=req.body;
-        console.log("formID:");
-        console.log(formID);
-        console.log(form);
         formModel.updateFormByID(formID,form)
             .then(function(updatedform){
-                    console.log("returning response");
-                    console.log(updatedform);
                     res.json(updatedform);
                 },
                 function(err){
