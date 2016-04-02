@@ -61,10 +61,9 @@ module.exports=function(app,formModel){
             });
     }
     function updateFormByID(req,res) {
-        console.log("update form by id");
+        console.log("update form by id in server");
         var formID = req.params.formID;
         var form=req.body;
-        var updatedForm=formModel.updateFormByID(formID,form);
         formModel.updateFormByID(formID,form)
             .then(function(updatedform){
                     console.log("returning response");
