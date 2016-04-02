@@ -13,6 +13,8 @@
             vm.puser={};
             UserService.findUserByID($rootScope.currentUser._id)
                 .then(function(response){
+                    console.log("user found");
+                    console.log(response.data);
                     vm.puser=response.data;
                     vm.puser.emails=vm.puser.emails.join(",");
                     vm.puser.phones=vm.puser.phones.join(",");
