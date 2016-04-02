@@ -95,6 +95,9 @@ module.exports=function(){
     function updateFormByID(formID,form) {
         var deferred = q.defer();
         console.log("form model:");
+        console.log("formID:");
+        console.log(formID);
+        console.log(form);
         /*Form
             .update (
                 {_id: formID},
