@@ -4,7 +4,15 @@ var bodyParser=require('body-parser');
 var multer=require('multer');
 
 var mongoose=require("mongoose");
-var db=mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME||'mongodb://localhost/form-maker');
+var mongo_conn_string='mongodb://localhost/form-maker';
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    mongo_conn_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+        process.env.OPENSHIFT_APP_NAME;
+}
+var db=mongoose.connect(mongo_conn_string);
 var passport=require("passport");
 var cookieParser=require('cookie-parser');
 var session=require('express-session');
