@@ -97,7 +97,6 @@ module.exports=function(){
         console.log("form model:");
         console.log("formID:");
         console.log(formID);
-        console.log(form);
         /*Form
             .update (
                 {_id: formID},
