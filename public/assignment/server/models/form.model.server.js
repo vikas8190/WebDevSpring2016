@@ -109,7 +109,7 @@ module.exports=function(){
                     }
                 }
             );*/
-        delete form[_id];
+        delete form._id;
         Form
             .findByIdAndUpdate (
                 formID, {$set: form},
