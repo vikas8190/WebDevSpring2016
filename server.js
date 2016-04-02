@@ -4,7 +4,7 @@ var bodyParser=require('body-parser');
 var multer=require('multer');
 
 var mongoose=require("mongoose");
-var db=mongoose.connect('mongodb://localhost/form-maker');
+var db=mongoose.connect(process.env.MONGOLAB_URI||'mongodb://localhost/form-maker');
 var passport=require("passport");
 var cookieParser=require('cookie-parser');
 var session=require('express-session');
