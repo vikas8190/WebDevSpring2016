@@ -12,20 +12,28 @@
         vm.register=register;
 
         function register(user){
-            UserService.createUser(user)
-                .then(function(response){
-                    UserService.findUserByUsername(user.username)
-                        .then(function (newUser) {
-                            if(newUser) {
-                                vm.SuccessAlert = true;
-                                $timeout(function () {
-                                    vm.SuccessAlert = false;
-                                    vm.user = newUser.data;
-                                    $location.path("/profile");
-                                }, 1000);
-                            }
-                        })
+            if(user.password==user.verifypassword) {
+                UserService.createUser(user)
+                    .then(function (response) {
+                        UserService.findUserByUsername(user.username)
+                            .then(function (newUser) {
+                                if (newUser) {
+                                    vm.SuccessAlert = true;
+                                    $timeout(function () {
+                                        vm.SuccessAlert = false;
+                                        vm.user = newUser.data;
+                                        $location.path("/profile");
+                                    }, 1000);
+                                }
+                            })
                     })
             }
+            else{
+                vm.ErrorAlert = true;
+                $timeout(function () {
+                    vm.ErrorAlert = false;
+                }, 1000);
+            }
+        }
     }
 })();
