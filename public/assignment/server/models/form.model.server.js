@@ -108,7 +108,7 @@ module.exports=function(){
             );*/
         Form
             .findByIdAndUpdate (
-                formID, newForm, {new: true},
+                formID, form, {new: true},
                 function (err, stats) {
                     if (!err) {
                         deferred.resolve(stats);
