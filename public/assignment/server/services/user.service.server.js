@@ -12,10 +12,7 @@ module.exports=function(app,userModel){
 
 
     function createUser(req,res) {
-        console.log("server create user:");
         var user=req.body;
-        console.log("creating user:");
-        console.log(user);
         userModel.createUser(user)
             .then(function(doc){
                 req.session.currentUser=doc;
@@ -24,8 +21,8 @@ module.exports=function(app,userModel){
             function(err){
                 res.json(400).send(err);
             });
-        console.log("create user service server done");
     }
+
     function getAllUsers(req,res) {
         var users=null;
         if(req.query.username&&req.query.password){
