@@ -94,6 +94,7 @@ module.exports=function(){
 
     function updateFormByID(formID,form) {
         var deferred = q.defer();
+        console.log("form model:");
         /*Form
             .update (
                 {_id: formID},
@@ -113,6 +114,7 @@ module.exports=function(){
                     if (!err) {
                         deferred.resolve(stats);
                     } else {
+                        console.log(err);
                         deferred.reject(err);
                     }
                 }
