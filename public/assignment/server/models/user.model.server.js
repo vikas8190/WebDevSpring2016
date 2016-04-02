@@ -89,7 +89,7 @@ module.exports=function($q){
         console.log(userID);
         console.log(user);
         var deferred = q.defer();
-        User
+        /*User
             .update (
                 {_id: userID},
                 {$set: user},
@@ -97,6 +97,19 @@ module.exports=function($q){
                     if (!err) {
                         deferred.resolve(stats);
                     } else {
+                        deferred.reject(err);
+                    }
+                }
+            );*/
+        //delete form._id;
+        User
+            .findByIdAndUpdate (
+                userID, {$set: user},
+                function (err, stats) {
+                    if (!err) {
+                        deferred.resolve(stats);
+                    } else {
+                        console.log(err);
                         deferred.reject(err);
                     }
                 }

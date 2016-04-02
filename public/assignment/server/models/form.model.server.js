@@ -94,21 +94,6 @@ module.exports=function(){
 
     function updateFormByID(formID,form) {
         var deferred = q.defer();
-        console.log("form model:");
-        console.log("formID:");
-        console.log(formID);
-        /*Form
-            .update (
-                {_id: formID},
-                {$set: form},
-                function (err, stats) {
-                    if (!err) {
-                        deferred.resolve(stats);
-                    } else {
-                        deferred.reject(err);
-                    }
-                }
-            );*/
         delete form._id;
         Form
             .findByIdAndUpdate (
