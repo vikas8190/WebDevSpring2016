@@ -25,8 +25,9 @@
         vm.update=update;
 
         function update(user){
-            user.emails=user.emails.trim().split(",");
-            user.phones=user.phones.trim().split(",");
+            console.log(user);
+            user.emails=user.emails.split(",");
+            user.phones=user.phones.split(",");
             UserService.updateUser($rootScope.currentUser._id,user)
                 .then(function(response){
                     console.log(response);
