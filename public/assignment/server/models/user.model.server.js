@@ -101,7 +101,7 @@ module.exports=function($q){
                     }
                 }
             );*/
-        //delete form._id;
+        delete user._id;
         User
             .findByIdAndUpdate (
                 userID, {$set: user},
