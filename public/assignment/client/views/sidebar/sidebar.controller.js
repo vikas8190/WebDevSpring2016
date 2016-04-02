@@ -6,11 +6,11 @@
     angular
         .module("FormBuilderApp")
         .controller("SidebarController",SidebarController);
-    function SidebarController($scope,$location)
+    function SidebarController($location)
     {
         var vm=this;
         function init() {
-            $scope.location = $location;
+            vm.$location = $location;
         }
         init();
     }

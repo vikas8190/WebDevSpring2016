@@ -16,10 +16,7 @@
         };
         return service;
         function createFormForUser(userId, form){
-            console.log("form:");
-            console.log(form);
             return $http.post("/api/assignment/user/"+userId+"/form",form);
-            //return $http.post("/api/assignment/form",form);
         }
         function findAllFormsForUser(userId){
             return $http.get("/api/assignment/form/"+userId+"/form");
@@ -28,8 +25,6 @@
             return $http.delete("/api/assignment/form/"+formId);
         }
         function updateFormById(formId, newForm){
-            console.log("called update form 1:");
-            console.log(newForm);
             return $http.put("/api/assignment/form/"+formId,newForm);
         }
         function getFormByID(formID){

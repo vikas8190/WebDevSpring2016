@@ -12,10 +12,8 @@
             vm.$location = $location;
             UserService.getCurrentUser()
                 .then(function(response){
-                    console.log(response.data);
                     UserService.setCurrentUser(response.data);
                 });
-            console.log("home controlleer init");
         }
         init();
     }

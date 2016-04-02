@@ -20,7 +20,6 @@
             return $http.post("/api/assignment/form/"+formId+"/field",field);
         }
         function getFieldsForForm(formId){
-            console.log("client get all fields");
             return $http.get("/api/assignment/form/"+formId+"/field");
         }
         function getFieldForForm(formId,fieldID){

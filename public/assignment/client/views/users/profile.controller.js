@@ -13,8 +13,6 @@
             vm.puser={};
             UserService.findUserByID($rootScope.currentUser._id)
                 .then(function(response){
-                    console.log("user found");
-                    console.log(response.data);
                     vm.puser=response.data;
                     vm.puser.emails=vm.puser.emails.join(",");
                     vm.puser.phones=vm.puser.phones.join(",");
@@ -27,17 +25,13 @@
         vm.update=update;
 
         function update(user){
-            console.log(user);
             user.emails=user.emails.split(",");
             user.phones=user.phones.split(",");
             UserService.updateUser($rootScope.currentUser._id,user)
                 .then(function(response){
-                    console.log(response);
                     if(response.data){
                         UserService.findUserByID($rootScope.currentUser._id)
                             .then (function (res) {
-                                console.log("response of updated user");
-                                console.log(res);
                                 vm.puser.username = res.data.username;
                                 vm.puser.firstName = res.data.firstName;
                                 vm.puser.lastName = res.data.lastName;

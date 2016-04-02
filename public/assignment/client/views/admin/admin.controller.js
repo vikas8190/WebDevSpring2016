@@ -6,10 +6,11 @@
     angular
         .module("FormBuilderApp")
         .controller("AdminController",AdminController);
-    function AdminController($scope,$rootScope,$location){
+    function AdminController($rootScope,$location){
+        var vm=this;
         if($rootScope.user==null)
         {
-            $scope.$location.path("/home");
+            $location.path("/home");
         }
     }
 })();

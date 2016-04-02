@@ -10,10 +10,6 @@
         var vm = this;
         var formID = $routeParams.formID;
         function init() {
-            //if ($rootScope.currentUser==null) {
-            //    console.log("redirecting to home");
-            //    $location.path("#/home");
-            //};
 
             vm.recordFieldEdit=recordFieldEdit;
             vm.addField=addField;
@@ -21,8 +17,6 @@
             vm.deleteField=deleteField;
             vm.editField=editField;
             if(formID) {
-                console.log("form id viewing");
-                console.log(formID);
                 vm.formID=formID;
                 FieldService
                     .getFieldsForForm(formID)
@@ -152,8 +146,6 @@
                     .then(function(response){
                         FieldService.getFieldsForForm(formID)
                             .then(function(response){
-                                console.log("updated fields");
-                                console.log(response.data);
                                 vm.fields = response.data;
                             })
                     });

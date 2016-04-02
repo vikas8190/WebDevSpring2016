@@ -57,15 +57,12 @@
         }
 
         function addForm(form){
-            console.log("add form called:");
-            console.log(form);
             FormService
                 .createFormForUser(
                     $rootScope.currentUser._id,
                     form
                 )
                 .then(function(res) {
-                    console.log("finding all forms for user:");
                     FormService
                         .findAllFormsForUser($rootScope.currentUser._id)
                         .then(function(res){
@@ -81,7 +78,6 @@
         }
 
         function loadFormFields(formID){
-            console.log("loading fields for the form:");
             $location.url("form/"+formID+"/fields");
         }
     }

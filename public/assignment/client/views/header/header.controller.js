@@ -14,11 +14,9 @@
         init();
         vm.logout = logout;
         function logout(user){
-            console.log("called logout");
             UserService.logout()
                 .then(function(response) {
                     UserService.setCurrentUser(null);
-                    console.log("redirecing to home:");
                     $location.url("/home");
             });
         }

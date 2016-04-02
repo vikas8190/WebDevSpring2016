@@ -6,12 +6,10 @@
     angular
         .module("FormBuilderApp")
         .controller("MainController",MainController);
-    function MainController($scope,$location,$route){
+    function MainController($location){
         var vm=this;
         function init() {
-            $scope.$location = $location;
-            $scope.$route = $route;
-            $scope.$location.path("/home");
+            $location.path("/home");
         }
         init();
     }
