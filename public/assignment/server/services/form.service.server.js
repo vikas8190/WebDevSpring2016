@@ -22,6 +22,7 @@ module.exports=function(app,formModel){
                 });
     }
     function getFormByID(req,res) {
+        console.log("get form by id");
         var formID=req.params.formID;
         var form=formModel.findFormByID(formID);
         formModel.findFormByID(formID)
@@ -60,12 +61,14 @@ module.exports=function(app,formModel){
             });
     }
     function updateFormByID(req,res) {
+        console.log("update form by id");
         var formID = req.params.formID;
         var form=req.body;
         var updatedForm=formModel.updateFormByID(formID,form);
         formModel.updateFormByID(formID,form)
             .then(function(updatedform){
                     console.log("returning response");
+                    console.log(updatedform);
                     res.json(updatedform);
                 },
                 function(err){

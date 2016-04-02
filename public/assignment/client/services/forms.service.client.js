@@ -29,6 +29,7 @@
         }
         function updateFormById(formId, newForm){
             console.log("called update form 1:");
+            console.log(newForm);
             return $http.put("/api/assignment/form/"+formId,newForm);
         }
         function getFormByID(formID){
