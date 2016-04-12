@@ -9,31 +9,37 @@
     function UserService($http,$rootScope) {
 
         var service={
-            findUserByCredentials : findUserByCredentials,
-            findUserByUsername:findUserByUsername,
-            findUserByID:findUserByID,
+            login:login,
+            logout:logout,
+            register:register,
+            //findUserByCredentials : findUserByCredentials,
+            //findUserByUsername:findUserByUsername,
+            //findUserByID:findUserByID,
             findAllUsers : findAllUsers,
             createUser : createUser,
             deleteUserById : deleteUserById,
             updateUser : updateUser,
             getCurrentUser: getCurrentUser,
-            setCurrentUser: setCurrentUser,
-            logout:logout
+            setCurrentUser: setCurrentUser
         };
 
         return service;
-        function findUserByCredentials(username, password) {
-            return $http.get("/api/assignment/user?username="+username+"&password="+password);
+
+        function logout() {
+            return $http.post("/api/assignment/user/logout");
         }
-        function findUserByUsername(username) {
-            return $http.get("/api/assignment/user?username="+username);
-        }
+        //function findUserByCredentials(username, password) {
+        //    return $http.get("/api/assignment/user?username="+username+"&password="+password);
+        //}
+        //function findUserByUsername(username) {
+        //    return $http.get("/api/assignment/user?username="+username);
+        //}
         function createUser(user){
             return $http.post("/api/assignment/user",user);
         }
-        function findUserByID(userID){
-            return $http.get("/api/assignment/user/"+userID);
-        }
+        //function findUserByID(userID){
+        //    return $http.get("/api/assignment/user/"+userID);
+        //}
 
         function findAllUsers(){
             return $http.get("/api/assignment/user");
@@ -49,11 +55,26 @@
         }
 
         function setCurrentUser(user) {
+            if(user) {
+                console.log(user);
+                user.emails = user.emails.join(",");
+                user.phones = user.phones.join(",");
+            }
             $rootScope.currentUser = user;
+            console.log("current user:");
+            console.log($rootScope.currentUser);
         }
 
         function logout() {
             return $http.post("/api/assignment/user/logout")
+        }
+
+        function register(user) {
+            return $http.post("/api/assignment/user/register", user);
+        }
+
+        function login(user) {
+            return $http.post("/api/assignment/user/login", user);
         }
     }
 })();

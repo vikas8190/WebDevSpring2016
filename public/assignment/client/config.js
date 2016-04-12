@@ -12,7 +12,10 @@
             .when("/home",{
                 templateUrl:"/assignment/client/views/home/home.view.html",
                 controller: "HomeController as controller",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkCurrentUser
+                }
             })
             .when("/register",{
                 templateUrl:"/assignment/client/views/users/register.view.html",
@@ -35,7 +38,10 @@
             .when("/admin",{
                 templateUrl:"/assignment/client/views/admin/admin.view.html",
                 controller: "AdminController as controller",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkAdmin
+                }
             })
             .when("/forms",{
                 templateUrl:"/assignment/client/views/forms/forms.view.html",
@@ -58,22 +64,71 @@
             });
     }
 
-    function checkLoggedIn(UserService, $q, $location) {
-        console.log("check if logged in");
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope)
+    {
         var deferred = $q.defer();
-        UserService.getCurrentUser().then(function (response) {
-            console.log(response.data);
-            var currentUser = response.data;
-            if (currentUser) {
-                UserService.setCurrentUser(currentUser);
-                deferred.resolve();
-            } else {
-                $location.url("/home");
-                deferred.reject();
 
+        $http.get('/api/assignment/user/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0' && user.roles.indexOf('admin') != -1)
+            {
+                user.emails=user.emails.join(",");
+                user.phones=user.phones.join(",");
+                $rootScope.currentUser = user;
+                deferred.resolve();
             }
         });
+
         return deferred.promise;
-    }
+    };
+
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/user/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                user.emails=user.emails.join(",");
+                user.phones=user.phones.join(",");
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+            // User is Not Authenticated
+            else
+            {
+                $rootScope.errorMessage = 'You need to log in.';
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+
+        return deferred.promise;
+    };
+
+    var checkCurrentUser = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/assignment/user/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                user.emails=user.emails.join(",");
+                user.phones=user.phones.join(",");
+                $rootScope.currentUser = user;
+            }
+            deferred.resolve();
+        });
+
+        return deferred.promise;
+    };
 
 })();

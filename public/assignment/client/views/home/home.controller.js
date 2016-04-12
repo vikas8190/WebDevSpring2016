@@ -12,6 +12,8 @@
             vm.$location = $location;
             UserService.getCurrentUser()
                 .then(function(response){
+                    console.log("current user");
+                    console.log(response);
                     UserService.setCurrentUser(response.data);
                 });
         }

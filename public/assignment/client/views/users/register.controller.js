@@ -13,20 +13,24 @@
 
         function register(user){
             if(user.password==user.verifypassword) {
-                UserService.createUser(user)
+                UserService.register(user)
                     .then(function (response) {
-                        UserService.findUserByUsername(user.username)
-                            .then(function (newUser) {
-                                if (newUser) {
-                                    vm.SuccessAlert = true;
-                                    $timeout(function () {
-                                        vm.SuccessAlert = false;
-                                        vm.user = newUser.data;
-                                        $location.path("/profile");
-                                    }, 1000);
-                                }
-                            })
-                    })
+                        console.log("response");
+                        console.log(response);
+                        var user = response.data;
+                        if (user != null) {
+                            UserService.setCurrentUser(user);
+                            vm.SuccessAlert = true;
+                            $timeout(function () {
+                                vm.SuccessAlert = false;
+                                vm.user = user;
+                                $location.path("/profile");
+                            }, 1000);
+                        }
+                    },
+                        function (err) {
+                            $scope.error = err;
+                        });
             }
             else{
                 vm.ErrorAlert = true;

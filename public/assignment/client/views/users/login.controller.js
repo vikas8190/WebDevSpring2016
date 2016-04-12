@@ -14,11 +14,11 @@
         //event handler implementations:
         function login(user) {
             if(user) {
-                UserService.findUserByCredentials(
-                    user.username, user.password)
-                    .then(function(res){
-                        if(res.data){
-                            UserService.setCurrentUser(res.data);
+                UserService.login(
+                    user)
+                    .then(function(response){
+                        if(response.data){
+                            UserService.setCurrentUser(response.data);
                             $location.path("/profile");
                         }
                         else {

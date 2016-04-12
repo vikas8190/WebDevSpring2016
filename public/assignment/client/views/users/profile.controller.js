@@ -8,8 +8,8 @@
         .controller("ProfileController",ProfileController);
     function ProfileController($location,$rootScope,$timeout,UserService){
         var vm=this;
-
-        function init(){
+        console.log($rootScope.currentUser);
+        /*function init(){
             vm.puser={};
             UserService.findUserByID($rootScope.currentUser._id)
                 .then(function(response){
@@ -19,18 +19,23 @@
                 });
         }
 
-        init();
+        init();*/
 
         //declare event handlers
         vm.update=update;
 
         function update(user){
-            user.emails=user.emails.split(",");
-            user.phones=user.phones.split(",");
+            console.log("update user:");
+            console.log(user);
+            //user.emails=user.emails.split(",");
+            //user.phones=user.phones.split(",");
             UserService.updateUser($rootScope.currentUser._id,user)
                 .then(function(response){
                     if(response.data){
-                        UserService.findUserByID($rootScope.currentUser._id)
+                        console.log("after update:");
+                        console.log(response.data);
+                        vm.users = response.data;
+                        /*UserService.findUserByID($rootScope.currentUser._id)
                             .then (function (res) {
                                 vm.puser.username = res.data.username;
                                 vm.puser.firstName = res.data.firstName;
@@ -42,9 +47,11 @@
                                 $timeout(function () {
                                     vm.SuccessAlert = false;
                                 }, 2000);
-                            })
-                    }
-                });
+                            })*/
+                    }},
+                    function(err) {
+                        $scope.error = err;
+                    });
         }
     }
 })();
