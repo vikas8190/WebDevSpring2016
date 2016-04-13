@@ -28,6 +28,8 @@ module.exports=function(app,userModel){
             .findUserByCredentials({username: username, password: password})
             .then(
                 function(user) {
+                    console.log("local strategy user:");
+                    console.log(user);
                     if (!user) { return done(null, false); }
                     return done(null, user);
                 },
@@ -101,39 +103,19 @@ module.exports=function(app,userModel){
 
     function getAllUsers(req,res) {
         if(isAdmin(req.user)) {
-        if(req.query.username&&req.query.password){
-            var credentials={
-                username:req.query.username,
-                password:req.query.password
-            };
-            userModel.findUserByCredentials(credentials)
+            console.log("find all");
+            userModel
+                .findAllUsers()
                 .then(
-                    function (doc) {
-                        req.session.currentUser = doc;
-                        res.json(doc);
+                    function (users) {
+                        console.log(users);
+                        res.json(users);
                     },
-                    function (err) {
+                    function () {
                         res.status(400).send(err);
                     }
                 );
-        }
-        else if(req.query.username){
-            var username=req.query.username;
-            userModel.findUserByUsername(username)
-                .then(
-                    function (doc) {
-                        res.json(doc);
-                    },
-                    function (err) {
-                        res.status(400).send(err);
-                    }
-                );
-        }
-        else{
-            res.json(userModel.findAllUsers());
-        }
-        }
-        else{
+        } else {
             res.status(403);
         }
     }
@@ -181,6 +163,8 @@ module.exports=function(app,userModel){
 
     function deleteUserByID(req,res) {
         if(isAdmin(req.user)) {
+            console.log("delete user by id");
+            console.log(req.params.id);
             userModel
                 .deleteUserByID(req.params.id)
                 .then(
@@ -247,6 +231,7 @@ module.exports=function(app,userModel){
     }
 
     function login(req, res) {
+        console.log("login service server:");
         var user = req.user;
         res.json(user);
     }
@@ -296,7 +281,11 @@ module.exports=function(app,userModel){
     }
 
     function isAdmin(user) {
-        if(user.roles.indexOf("admin") > 0) {
+        console.log("check admin");
+        console.log(user.roles);
+        console.log(user.roles.indexOf('admin'));
+        if(user.roles.indexOf('admin') > -1) {
+            console.log("true");
             return true
         }
         return false;

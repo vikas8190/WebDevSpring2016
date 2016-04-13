@@ -21,7 +21,9 @@ var session=require('express-session');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(multer());
-var secret_key=process.env.PASSPORT_SECRET||'cs5610formmakervikas';
+console.log(process.env.SESSION_SECRET);
+var secret_key=process.env.SESSION_SECRET;
+//||'cs5610formmakervikas';
 app.use(session({resave: true,
     saveUninitialized: true,
     secret: secret_key}));

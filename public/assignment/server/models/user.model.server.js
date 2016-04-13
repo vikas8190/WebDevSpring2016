@@ -28,7 +28,10 @@ module.exports=function(){
     }
 
     function deleteUserByID(userID) {
-        return User.remove(userID);
+        console.log("remove user id");
+        console.log(userID);
+        //return User.remove(userID);
+        return User.remove({"_id":userID});
     }
 
     function createUser(user) {
@@ -44,6 +47,8 @@ module.exports=function(){
     }
 
     function findUserByCredentials(credentials) {
+        console.log(credentials.username);
+        console.log(credentials.password);
         return User.findOne ({username: credentials.username,password:credentials.password});
     }
 

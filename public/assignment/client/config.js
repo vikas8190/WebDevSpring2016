@@ -72,11 +72,14 @@
         {
             $rootScope.errorMessage = null;
             // User is Authenticated
+            console.log("user:");
+            console.log(user);
             if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
                 user.emails=user.emails.join(",");
                 user.phones=user.phones.join(",");
                 $rootScope.currentUser = user;
+                console.log("resolved");
                 deferred.resolve();
             }
         });
