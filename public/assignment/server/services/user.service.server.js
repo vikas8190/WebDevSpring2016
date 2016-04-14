@@ -92,41 +92,47 @@ module.exports=function(app,userModel){
         }
 
         // first check if a user already exists with the username
-        userModel
-            .findUserByUsername(newUser.username)
-            .then(
-                function(user){
-                    // if the user does not already exist
-                    if(user == null) {
-                        // create a new user
-                        //newUser.password=bcrypt.hashSync(newUser.password);
-                        return userModel.createUser(newUser)
-                            .then(
-                                // fetch all the users
-                                function () {
-                                    return userModel.findAllUsers();
-                                },
-                                function (err) {
-                                    res.status(400).send(err);
-                                }
-                            );
-                        // if the user already exists, then just fetch all the users
-                    } else {
-                        return userModel.findAllUsers();
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
+        userModel.password_encrypt(newUser.password)
+            .then(function(password) {
+                if (newUser.password_modified) {
+                    newUser.password = password;
                 }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(){
-                    res.status(400).send(err);
-                }
-            )
+                userModel
+                    .findUserByUsername(newUser.username)
+                    .then(
+                        function (user) {
+                            // if the user does not already exist
+                            if (user == null) {
+                                // create a new user
+                                //newUser.password=bcrypt.hashSync(newUser.password);
+                                return userModel.createUser(newUser)
+                                    .then(
+                                        // fetch all the users
+                                        function () {
+                                            return userModel.findAllUsers();
+                                        },
+                                        function (err) {
+                                            res.status(400).send(err);
+                                        }
+                                    );
+                                // if the user already exists, then just fetch all the users
+                            } else {
+                                return userModel.findAllUsers();
+                            }
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    )
+                    .then(
+                        function (users) {
+                            res.json(users);
+                        },
+                        function () {
+                            res.status(400).send(err);
+                        }
+                    )
+            });
     }
 
 
@@ -319,38 +325,45 @@ module.exports=function(app,userModel){
         var newUser = req.body;
         newUser.roles = ['student'];
 
-        userModel
-            .findUserByUsername(newUser.username)
-            .then(
-                function(user){
-                    console.log("user here");
-                    //console.log(user);
-                    if(user) {
-                        res.json(null);
-                    } else {
-                        return userModel.createUser(newUser);
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
+        userModel.password_encrypt(newUser.password)
+            .then(function(password) {
+                if (newUser.password_modified) {
+                    newUser.password = password;
                 }
-            )
-            .then(
-                function(user){
-                    if(user){
-                        req.login(user, function(err) {
-                            if(err) {
-                                res.status(400).send(err);
+                console.log("encryption over");
+                userModel
+                    .findUserByUsername(newUser.username)
+                    .then(
+                        function (user) {
+                            console.log("user here");
+                            console.log(user);
+                            if (user) {
+                                res.json(null);
                             } else {
-                                res.json(user);
+                                return userModel.createUser(newUser);
                             }
-                        });
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    )
+                    .then(
+                        function (user) {
+                            if (user) {
+                                req.login(user, function (err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(user);
+                                    }
+                                });
+                            }
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    );
+            });
     }
 
     function isAdmin(user) {

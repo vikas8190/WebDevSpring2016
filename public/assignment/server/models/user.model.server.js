@@ -31,7 +31,7 @@ module.exports=function(){
             });
         });
     });*/
-    UserSchema.pre('save',encrypt_password);
+    /*UserSchema.pre('save',encrypt_password);
     UserSchema.pre('update',encrypt_password);
     function encrypt_password(next){
         var user = this;
@@ -55,7 +55,7 @@ module.exports=function(){
                 next();
             });
         });
-    }
+    }*/
 
     UserSchema.methods.comparePassword = function(candidatePassword, cb) {
         bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
