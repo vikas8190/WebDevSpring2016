@@ -8,6 +8,8 @@
         .controller("ProfileController",ProfileController);
     function ProfileController($location,$rootScope,$timeout,UserService){
         var vm=this;
+        vm.curUser=$rootScope.currentUser;
+        vm.setPasswordModified=setPasswordModified;
         console.log($rootScope.currentUser);
         /*function init(){
             vm.puser={};
@@ -29,7 +31,9 @@
             console.log(user);
             //user.emails=user.emails.split(",");
             //user.phones=user.phones.split(",");
-            UserService.updateUser($rootScope.currentUser._id,user)
+            console.log("updating user");
+            console.log(user);
+            UserService.updateUser(vm.curUser._id,user)
                 .then(function(response){
                     if(response.data){
                         console.log("after update:");
@@ -52,6 +56,9 @@
                     function(err) {
                         $scope.error = err;
                     });
+        }
+        function setPasswordModified(){
+            vm.curUser.password_modified=true;
         }
     }
 })();

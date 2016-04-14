@@ -3,6 +3,7 @@
  */
 var passport         = require('passport');
 var LocalStrategy    = require('passport-local').Strategy;
+var bcrypt=require('bcrypt');
 
 module.exports=function(app,userModel){
 
@@ -23,7 +24,7 @@ module.exports=function(app,userModel){
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    function localStrategy(username, password, done) {
+    /*function localStrategy(username, password, done) {
         userModel
             .findUserByCredentials({username: username, password: password})
             .then(
@@ -32,6 +33,32 @@ module.exports=function(app,userModel){
                     console.log(user);
                     if (!user) { return done(null, false); }
                     return done(null, user);
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }*/
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function(user) {
+                    if (!user) { return done(null, false); }
+                    else {
+                        user.comparePassword(password,function(err,isMatch){
+                            if(err){
+                                return done(err);
+                            }
+                            else if(isMatch){
+                                return done(null,user);
+                            }
+                            else{
+                                return done(null,false);
+                            }
+                        });
+                    }
                 },
                 function(err) {
                     if (err) { return done(err); }
@@ -72,13 +99,14 @@ module.exports=function(app,userModel){
                     // if the user does not already exist
                     if(user == null) {
                         // create a new user
+                        //newUser.password=bcrypt.hashSync(newUser.password);
                         return userModel.createUser(newUser)
                             .then(
                                 // fetch all the users
-                                function(){
+                                function () {
                                     return userModel.findAllUsers();
                                 },
-                                function(err){
+                                function (err) {
                                     res.status(400).send(err);
                                 }
                             );
@@ -101,6 +129,7 @@ module.exports=function(app,userModel){
             )
     }
 
+
     function getAllUsers(req,res) {
         if(isAdmin(req.user)) {
             console.log("find all");
@@ -108,7 +137,6 @@ module.exports=function(app,userModel){
                 .findAllUsers()
                 .then(
                     function (users) {
-                        console.log(users);
                         res.json(users);
                     },
                     function () {
@@ -132,6 +160,44 @@ module.exports=function(app,userModel){
             });
     }
 
+    /*function updateUserByID(req,res) {
+        var newUser = req.body;
+        if(!isAdmin(req.user)) {
+            delete newUser.roles;
+        }
+        if(typeof newUser.roles == "string") {
+            newUser.roles = newUser.roles.split(",");
+        }
+
+        userModel.password_encrypt(newUser.password)
+            .then(function(password) {
+                console.log("password encrypted");
+                console.log(password);
+                userModel
+                    .updateUserByID(req.params.id, newUser)
+                    .then(
+                        function (user) {
+                            console.log("find all users after update");
+                            return userModel.findAllUsers();
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    )
+                    .then(
+                        function (users) {
+                            console.log("returning users");
+                            //console.log(users);
+                            res.json(users);
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    );
+            });
+        console.log("end update user by id");
+    }*/
+
     function updateUserByID(req,res) {
         var newUser = req.body;
         if(!isAdmin(req.user)) {
@@ -141,24 +207,31 @@ module.exports=function(app,userModel){
             newUser.roles = newUser.roles.split(",");
         }
 
-        userModel
-            .updateUserByID(req.params.id, newUser)
-            .then(
-                function(user){
-                    return userModel.findAllUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
+        userModel.password_encrypt(newUser.password)
+            .then(function(password) {
+                if(newUser.password_modified){
+                    newUser.password=password;
                 }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
+                userModel
+                    .updateUserByID(req.params.id, newUser)
+                    .then(
+                        function (user) {
+                            return userModel.findAllUsers();
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    )
+                    .then(
+                        function (users) {
+                            res.json(users);
+                        },
+                        function (err) {
+                            res.status(400).send(err);
+                        }
+                    );
+            });
+        console.log("end update user by id");
     }
 
     function deleteUserByID(req,res) {
@@ -251,7 +324,7 @@ module.exports=function(app,userModel){
             .then(
                 function(user){
                     console.log("user here");
-                    console.log(user);
+                    //console.log(user);
                     if(user) {
                         res.json(null);
                     } else {
@@ -297,6 +370,5 @@ module.exports=function(app,userModel){
         } else {
             next();
         }
-    };
-
+    }
 }

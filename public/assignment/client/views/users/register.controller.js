@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .controller("RegisterController",RegisterController);
 
-    function RegisterController($location,$timeout,UserService){
+    function RegisterController($scope,$location,$timeout,UserService){
         var vm=this;
         vm.register=register;
 
@@ -29,6 +29,7 @@
                         }
                     },
                         function (err) {
+                            console.log(err);
                             $scope.error = err;
                         });
             }
