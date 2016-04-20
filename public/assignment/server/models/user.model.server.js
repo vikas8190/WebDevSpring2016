@@ -97,6 +97,7 @@ module.exports=function(){
 
     function updateUserByID(userID,user) {
         console.log("model findandupdate");
+        delete user._id;
         return User.findByIdAndUpdate(userID, {$set: user});
     }
 
