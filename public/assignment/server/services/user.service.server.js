@@ -212,6 +212,8 @@ module.exports=function(app,userModel){
                             return userModel.findAllUsers();
                         },
                         function (err) {
+                            console.log("err1");
+                            console.log(err);
                             res.status(400).send(err);
                         }
                     )
@@ -220,6 +222,8 @@ module.exports=function(app,userModel){
                             res.json(users);
                         },
                         function (err) {
+                            console.log("err2");
+                            console.log(err);
                             res.status(400).send(err);
                         }
                     );
