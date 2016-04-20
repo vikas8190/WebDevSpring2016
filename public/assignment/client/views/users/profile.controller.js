@@ -6,7 +6,7 @@
     angular
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
-    function ProfileController($location,$rootScope,$timeout,UserService){
+    function ProfileController($scope,$location,$rootScope,$timeout,UserService){
         var vm=this;
         vm.curUser=$rootScope.currentUser;
         vm.setPasswordModified=setPasswordModified;
