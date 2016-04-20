@@ -156,6 +156,20 @@
 angular.module('FormBuilderApp').controller('ModalController', function ($scope, $uibModalInstance, field) {
 
     $scope.field = field;
+    if($scope.field.label){
+        $scope.newLabel=$scope.field.label;
+    }
+    if($scope.field.placeholder){
+        $scope.newPlaceholder=$scope.field.placeholder;
+    }
+    if($scope.field.options){
+        var optionString="";
+        for(var i=0;i<$scope.field.options.length;i++){
+            optionString+=$scope.field.options[i].label+":"+$scope.field.options[i].value+"\n";
+        }
+        $scope.newPlaceholder=optionString;
+    }
+    console.log(field);
     $scope.ok = function () {
         if($scope.newLabel) {
             $scope.field.label = $scope.newLabel;
