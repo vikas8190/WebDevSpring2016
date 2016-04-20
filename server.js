@@ -21,8 +21,7 @@ var session=require('express-session');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(multer());
-console.log(process.env.SESSION_SECRET);
-var secret_key=process.env.SESSION_SECRET;
+var secret_key=process.env.SESSION_SECRET||process.env.OPENSHIFT_SECRET_TOKEN;
 //||'cs5610formmakervikas';
 app.use(session({resave: true,
     saveUninitialized: true,
