@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser=require('body-parser');
 var multer=require('multer');
-var passport      = require('passport');
+//var passport      = require('passport');
 var mongoose=require("mongoose");
 var mongo_conn_string='mongodb://localhost/form-maker';
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
@@ -15,7 +15,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 
 var db=mongoose.connect(mongo_conn_string);
-//var passport=require("passport");
+var passport=require("passport");
 var cookieParser=require('cookie-parser');
 var session=require('express-session');
 app.use(bodyParser.json());
@@ -35,6 +35,7 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+console.log(port);
 //app.get('/hello', function(req, res){
 //    res.send('hello world');
 //});
